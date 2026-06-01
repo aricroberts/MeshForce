@@ -35,15 +35,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
 .page-header h1 em{font-style:italic;color:var(--amber)}
 .page-header p{color:var(--slate-light);font-size:1.0625rem;max-width:620px;line-height:1.65}
 
-/* DIRECTORY CALLOUT BANNER */
-.dir-banner{position:relative;z-index:1;max-width:1200px;margin:0 auto 2.5rem;padding:0 2rem}
-.dir-banner-inner{background:linear-gradient(90deg,rgba(17,34,64,0.9),rgba(29,52,97,0.5));border:1px solid rgba(244,165,0,0.2);border-radius:8px;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
-.dir-banner-text{display:flex;align-items:center;gap:0.75rem}
-.dir-banner-icon{font-size:1.25rem;flex-shrink:0}
-.dir-banner-copy{font-size:0.875rem;color:var(--slate-light)}
-.dir-banner-copy strong{color:var(--white)}
-.dir-banner-link{background:rgba(244,165,0,0.12);color:var(--amber);border:1px solid rgba(244,165,0,0.35);padding:0.45rem 1.1rem;border-radius:5px;font-size:0.8125rem;font-weight:600;text-decoration:none;transition:all 0.2s;white-space:nowrap;font-family:'DM Sans',sans-serif}
-.dir-banner-link:hover{background:rgba(244,165,0,0.2);border-color:var(--amber)}
 
 /* ===== SEAM ENGINE ===== */
 .seam-engine{position:relative;z-index:1;max-width:1200px;margin:0 auto 4rem;padding:0 2rem}
@@ -104,16 +95,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
 .about-card ul li{font-size:0.875rem;color:var(--slate-light);padding:0.25rem 0;display:flex;align-items:baseline;gap:0.5rem}
 .about-card ul li::before{content:'→';color:var(--amber);font-size:0.75rem;flex-shrink:0}
 
-/* DIRECTORY CTA */
-.dir-cta-section{position:relative;z-index:1;max-width:1200px;margin:0 auto 4rem;padding:0 2rem}
-.dir-cta-inner{background:linear-gradient(135deg,rgba(17,34,64,0.9),rgba(29,52,97,0.6));border:1px solid rgba(244,165,0,0.25);border-radius:12px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
-.dir-cta-copy h2{font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:0.5rem}
-.dir-cta-copy p{font-size:0.9rem;color:var(--slate-light);max-width:480px;line-height:1.6}
-.dir-cta-actions{display:flex;flex-direction:column;gap:0.65rem;align-items:flex-start;flex-shrink:0}
-.btn-amber{background:var(--amber);color:var(--navy);padding:0.7rem 1.75rem;border-radius:6px;font-weight:700;text-decoration:none;font-size:0.9rem;transition:all 0.2s;display:inline-block;white-space:nowrap}
-.btn-amber:hover{background:#ffc030;transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:var(--slate-light);padding:0.7rem 1.75rem;border-radius:6px;border:1px solid var(--card-border);font-weight:500;text-decoration:none;font-size:0.875rem;transition:all 0.2s;display:inline-block;white-space:nowrap}
-.btn-ghost:hover{color:var(--white);border-color:rgba(168,178,216,0.3)}
+
 
 footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5rem 2rem;margin-top:2rem}
 .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem}
@@ -125,9 +107,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
 
 @media(max-width:768px){
   .about-grid{grid-template-columns:1fr}
-  .dir-cta-inner{flex-direction:column}
   .nav-ecosystem{display:none}
-  .dir-banner-inner{flex-direction:column;align-items:flex-start}
+
 }
 </style>
 </head>
@@ -139,7 +120,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="tools.html">Tools</a></li>
-      <li><a href="seam-directory.html">Directory</a></li>
       <li><a href="seam.html" class="active">The Seam</a></li>
     </ul>
     <div class="nav-ecosystem">
@@ -157,16 +137,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   <p>Ask about WFM industry research, best practices, AI agent deployment, capacity planning frameworks, or any workforce management topic. The Seam searches current literature and synthesizes findings for practitioners.</p>
 </div>
 
-<!-- Directory callout banner -->
-<div class="dir-banner">
-  <div class="dir-banner-inner">
-    <div class="dir-banner-text">
-      <span class="dir-banner-icon">🗂️</span>
-      <span class="dir-banner-copy"><strong>Looking for platforms and vendors?</strong> Browse the full WFM &amp; ECP directory — 120+ tools, platforms, associations, research sources, and training resources.</span>
-    </div>
-    <a href="seam-directory.html" class="dir-banner-link">Browse the Directory →</a>
-  </div>
-</div>
 
 <!-- ===== SEAM INTELLIGENCE ENGINE ===== -->
 <section class="seam-engine" id="intelligence">
@@ -233,19 +203,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   </div>
 </section>
 
-<!-- DIRECTORY CTA -->
-<section class="dir-cta-section">
-  <div class="dir-cta-inner">
-    <div class="dir-cta-copy">
-      <h2>Browse the Full Platform Directory</h2>
-      <p>120+ curated listings across AI agents, WFM platforms, enterprise capacity planning tools, research publications, professional associations, and training resources — with badges, descriptions, and direct links.</p>
-    </div>
-    <div class="dir-cta-actions">
-      <a href="seam-directory.html" class="btn-amber">Open the Directory →</a>
-      <a href="seam-directory.html#submit-listing" class="btn-ghost">Submit a Listing</a>
-    </div>
-  </div>
-</section>
 
 <footer>
   <div class="footer-inner">
@@ -256,8 +213,6 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
     <div class="footer-links">
       <a href="index.html">Home</a>
       <a href="tools.html">Tools</a>
-      <a href="seam-directory.html">Directory</a>
-      <a href="seam-directory.html#submit-listing">Submit Listing</a>
       <a href="mailto:partnerships@aricciviclabs.org">Contact</a>
     </div>
   </div>
