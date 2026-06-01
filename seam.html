@@ -656,101 +656,101 @@ function selectTopic(el, topic) {
 }
 
 async function runSeamSearch() {
-  const query = document.getElementById('queryInput').value.trim();
+  var query = document.getElementById('queryInput').value.trim();
   if (!query) return;
-  
-  const btn = document.getElementById('searchBtn');
-  const area = document.getElementById('resultsArea');
+
+  var btn = document.getElementById('searchBtn');
+  var area = document.getElementById('resultsArea');
   btn.disabled = true;
   btn.textContent = 'Searching…';
-  
-  area.innerHTML = `<div class="loading-state">
-    <div style="margin-bottom:1rem">The Seam is searching industry literature…</div>
-    <span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span>
-  </div>`;
-  
-  const systemPrompt = `You are The Seam, an AI intelligence engine for workforce management (WFM) and enterprise capacity planning (ECP) professionals. Your job is to search for and synthesize current, authoritative information on workforce management topics.
 
-When given a query, use your web search capability to find recent industry research, best practices, vendor developments, and practitioner insights. Then synthesize findings into 3-5 structured result items relevant to WFM/ECP professionals.
+  area.innerHTML = '<div class="loading-state"><div style="margin-bottom:1rem">The Seam is searching industry literature…</div><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
 
-Return ONLY a JSON array (no markdown, no preamble) with this structure:
-[
-  {
-    "source": "SOURCE NAME",
-    "date": "Month Year or 'Recent'",
-    "tag": "CATEGORY",
-    "title": "Descriptive Title of Finding",
-    "summary": "2-3 sentence summary of the key finding, insight, or development relevant to WFM/ECP practitioners.",
-    "url": "https://actual-url-if-available-or-empty-string"
+  var systemPrompt = 'You are The Seam, an AI intelligence engine for workforce management (WFM) and enterprise capacity planning (ECP) professionals. Synthesize authoritative, current information on workforce management topics.\n\nReturn ONLY a JSON array (no markdown, no preamble, no backticks) with this exact structure:\n[\n  {\n    "source": "SOURCE NAME",\n    "date": "Month Year or Recent",\n    "tag": "CATEGORY",\n    "title": "Descriptive Title of Finding",\n    "summary": "2-3 sentence practical summary for WFM/ECP practitioners with specific data or recommendations where available.",\n    "url": ""\n  }\n]\n\nCategories: Research, Industry Trend, Best Practice, Tool Update, Vendor News, Case Study, Framework, Academic. Return 3-5 items.';
+
+  var userMsg = 'Synthesize 3-5 current findings on this WFM/ECP topic: ' + query;
+
+  function parseResults(txt) {
+    var clean = txt.replace(/```json/g,'').replace(/```/g,'').trim();
+    var m = clean.match(/\[[\s\S]*\]/);
+    if (m) return JSON.parse(m[0]);
+    return JSON.parse(clean);
   }
-]
 
-Categories should be one of: Research, Industry Trend, Best Practice, Tool Update, Vendor News, Case Study, Framework, Academic.
-Keep summaries practical and actionable for WFM/ECP professionals. Be specific about data, statistics, and concrete recommendations where available.`;
+  function renderResults(results) {
+    if (!Array.isArray(results) || results.length === 0) throw new Error('No results returned');
+    area.innerHTML = results.map(function(r) {
+      return '<div class="result-item">'
+        + '<div class="result-meta">'
+        + '<span class="result-source">' + escHtml(r.source || 'Source') + '</span>'
+        + '<span class="result-date">' + escHtml(r.date || '') + '</span>'
+        + '<span class="result-tag">' + escHtml(r.tag || 'Research') + '</span>'
+        + '</div>'
+        + '<div class="result-title">' + escHtml(r.title || '') + '</div>'
+        + '<div class="result-summary">' + escHtml(r.summary || '') + '</div>'
+        + (r.url ? '<a href="' + escHtml(r.url) + '" target="_blank" rel="noopener" class="result-link">Read more ↗</a>' : '')
+        + '</div>';
+    }).join('');
+  }
 
+  // First attempt: with web_search tool
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    var r1 = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
         system: systemPrompt,
-        tools: [{
-          type: 'web_search_20250305',
-          name: 'web_search'
-        }],
-        messages: [{ role: 'user', content: `Search for current information and synthesize findings on this WFM/ECP topic: ${query}` }]
+        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+        messages: [{ role: 'user', content: userMsg }]
       })
     });
-    
-    const data = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(data.error?.message || 'API error');
-    }
-    
-    // Extract text from all content blocks
-    const fullText = data.content
-      .map(item => item.type === 'text' ? item.text : '')
-      .filter(Boolean)
-      .join('\n');
-    
-    // Parse JSON from response
-    const clean = fullText.replace(/```json|```/g, '').trim();
-    let results;
-    try {
-      results = JSON.parse(clean);
-    } catch(e) {
-      // Try to extract JSON array
-      const match = clean.match(/\[[\s\S]*\]/);
-      if (match) results = JSON.parse(match[0]);
-      else throw new Error('Could not parse results');
-    }
-    
-    if (!Array.isArray(results) || results.length === 0) throw new Error('No results returned');
-    
-    area.innerHTML = results.map(r => `
-      <div class="result-item">
-        <div class="result-meta">
-          <span class="result-source">${escHtml(r.source || 'Source')}</span>
-          <span class="result-date">${escHtml(r.date || '')}</span>
-          <span class="result-tag">${escHtml(r.tag || 'Research')}</span>
-        </div>
-        <div class="result-title">${escHtml(r.title || '')}</div>
-        <div class="result-summary">${escHtml(r.summary || '')}</div>
-        ${r.url ? `<a href="${escHtml(r.url)}" target="_blank" rel="noopener" class="result-link">Read more ↗</a>` : ''}
-      </div>
-    `).join('');
-    
-  } catch(err) {
-    area.innerHTML = `<div class="error-state">
-      <strong>Search encountered an issue.</strong><br>
-      ${err.message || 'Please try again or rephrase your query.'}<br><br>
-      <small>The Seam requires an active Anthropic API connection. If you're previewing locally, the full intelligence engine is available on aricciviclabs.org/meshforce.</small>
-    </div>`;
+    if (!r1.ok) throw new Error('http_' + r1.status);
+    var d1 = await r1.json();
+    if (d1.error) throw new Error(d1.error.message || 'api_error');
+    var txt1 = (d1.content || []).map(function(b){ return b.type === 'text' ? b.text : ''; }).join('');
+    if (!txt1 || txt1.length < 10) throw new Error('empty_response');
+    renderResults(parseResults(txt1));
+    btn.disabled = false;
+    btn.textContent = 'Search →';
+    return;
+  } catch(e1) {
+    // Fall through to second attempt without web_search tool
   }
-  
+
+  // Second attempt: no web_search tool (works in more environments)
+  try {
+    var r2 = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userMsg + ' Draw on your training knowledge about WFM industry research, best practices, and vendor landscape.' }]
+      })
+    });
+    if (!r2.ok) throw new Error('http_' + r2.status);
+    var d2 = await r2.json();
+    if (d2.error) throw new Error(d2.error.message || 'api_error');
+    var txt2 = (d2.content || []).map(function(b){ return b.type === 'text' ? b.text : ''; }).join('');
+    if (!txt2 || txt2.length < 10) throw new Error('empty_response');
+    renderResults(parseResults(txt2));
+  } catch(e2) {
+    area.innerHTML = '<div class="error-state"><strong>Search encountered an issue.</strong><br>'
+      + (e2.message || 'Please try again or rephrase your query.')
+      + '<br><br><small>The Seam requires an active Anthropic API connection. If you\'re previewing locally, the full intelligence engine is available on aricciviclabs.org/meshforce.</small></div>';
+  }
+
   btn.disabled = false;
   btn.textContent = 'Search →';
 }
