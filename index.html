@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MeshForce — WFM & AI Workforce Registry | Aric Civic Labs</title>
+<meta name="description" content="The definitive resource registry for workforce management and enterprise capacity planning professionals integrating AI agents. Free tools, calculators, vendor directory, and The Seam intelligence briefing.">
+<meta name="keywords" content="workforce management, WFM tools, AI agents, enterprise capacity planning, Erlang calculator, contact center staffing, WFM software, AI workforce automation, scheduling tools, shrinkage calculator">
+<meta name="author" content="Aric Civic Labs">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://aricciviclabs.org/meshforce">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MeshForce — WFM & AI Workforce Registry | Aric Civic Labs">
+<meta property="og:description" content="Practical tools, calculators, AI agent builders, and curated resources for WFM and ECP professionals integrating AI into workforce operations.">
+<meta property="og:url" content="https://aricciviclabs.org/meshforce">
+<meta property="og:site_name" content="Aric Civic Labs">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MeshForce — WFM & AI Workforce Registry">
+<meta name="twitter:description" content="The definitive resource registry for WFM and ECP professionals navigating the human-AI workforce transition.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"MeshForce — WFM & AI Workforce Registry","url":"https://aricciviclabs.org/meshforce","description":"The definitive resource registry for workforce management and enterprise capacity planning professionals navigating AI agent integration.","publisher":{"@type":"Organization","name":"Aric Civic Labs","url":"https://aricciviclabs.org"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a1628;
+  --navy-mid: #112240;
+  --navy-light: #1d3461;
+  --slate: #8892b0;
+  --slate-light: #a8b2d8;
+  --amber: #f4a500;
+  --amber-dim: #c47f00;
+  --cream: #f0ede6;
+  --white: #e8e6e1;
+  --rule: rgba(244,165,0,0.25);
+  --card-bg: rgba(17,34,64,0.7);
+  --card-border: rgba(168,178,216,0.12);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 10%,rgba(244,165,0,0.06) 0%,transparent 60%),radial-gradient(ellipse 60% 60% at 80% 80%,rgba(29,52,97,0.4) 0%,transparent 60%);pointer-events:none;z-index:0}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 2rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:1.25rem;color:var(--amber);text-decoration:none;letter-spacing:0.02em}
+.nav-logo span{color:var(--slate-light);font-size:0.75rem;font-family:'DM Sans',sans-serif;font-weight:400;margin-left:0.5rem}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--slate-light);text-decoration:none;font-size:0.875rem;font-weight:500;transition:color 0.2s}
+.nav-links a:hover,.nav-links a.active{color:var(--amber)}
+.nav-seam{background:var(--amber);color:var(--navy)!important;padding:0.35rem 1rem;border-radius:4px;font-weight:600!important}
+.nav-seam:hover{background:var(--amber-dim)!important;color:var(--navy)!important}
+
+/* HERO */
+.hero{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:6rem 2rem 4rem}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--amber);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,5vw,4rem);line-height:1.1;margin-bottom:1.5rem;max-width:800px}
+.hero h1 em{font-style:italic;color:var(--amber)}
+.hero-sub{font-size:1.125rem;color:var(--slate-light);line-height:1.7;max-width:600px;margin-bottom:2.5rem}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{background:var(--amber);color:var(--navy);padding:0.75rem 2rem;border-radius:4px;text-decoration:none;font-weight:600;font-size:0.9375rem;transition:background 0.2s}
+.btn-primary:hover{background:var(--amber-dim)}
+.btn-ghost{border:1px solid var(--card-border);color:var(--slate-light);padding:0.75rem 2rem;border-radius:4px;text-decoration:none;font-weight:500;font-size:0.9375rem;transition:all 0.2s}
+.btn-ghost:hover{border-color:var(--slate);color:var(--white)}
+.hero-stats{display:flex;gap:3rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--rule)}
+.stat-num{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--amber)}
+.stat-label{font-size:0.8125rem;color:var(--slate);margin-top:0.25rem}
+
+/* SECTION CARDS */
+.section-grid{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:4rem 2rem}
+.section-grid h2{font-family:'DM Serif Display',serif;font-size:1.75rem;margin-bottom:0.75rem}
+.section-grid p.sub{color:var(--slate-light);margin-bottom:2.5rem;font-size:0.9375rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:2rem;text-decoration:none;color:inherit;transition:border-color 0.2s,transform 0.2s;display:block}
+.card:hover{border-color:rgba(244,165,0,0.4);transform:translateY(-2px)}
+.card-icon{font-size:2rem;margin-bottom:1rem}
+.card h3{font-family:'DM Serif Display',serif;font-size:1.25rem;margin-bottom:0.5rem;color:var(--white)}
+.card p{color:var(--slate);font-size:0.875rem;line-height:1.6}
+.card-tag{display:inline-block;margin-top:1rem;font-size:0.75rem;font-family:'JetBrains Mono',monospace;color:var(--amber);letter-spacing:0.05em}
+.card.featured{border-color:rgba(244,165,0,0.3);background:rgba(244,165,0,0.05)}
+
+/* SEAM SECTION */
+.seam-section{position:relative;z-index:1;background:linear-gradient(135deg,rgba(17,34,64,0.9),rgba(10,22,40,0.95));border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:5rem 2rem}
+.seam-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.seam-copy h2{font-family:'DM Serif Display',serif;font-size:2.25rem;margin-bottom:1rem}
+.seam-copy h2 em{font-style:italic;color:var(--amber)}
+.seam-copy p{color:var(--slate-light);line-height:1.7;margin-bottom:2rem}
+.seam-tiers{display:flex;flex-direction:column;gap:1rem}
+.tier{background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:1.5rem}
+.tier.highlighted{border-color:rgba(244,165,0,0.4);background:rgba(244,165,0,0.06)}
+.tier-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem}
+.tier-name{font-weight:600;font-size:0.9375rem}
+.tier-price{font-family:'JetBrains Mono',monospace;font-size:0.875rem;color:var(--amber)}
+.tier-desc{color:var(--slate);font-size:0.8125rem;line-height:1.5}
+@media(max-width:768px){.seam-inner{grid-template-columns:1fr}}
+
+/* QUICK DIRECTORY */
+.quick-dir{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:4rem 2rem}
+.quick-dir h2{font-family:'DM Serif Display',serif;font-size:1.75rem;margin-bottom:0.5rem}
+.quick-dir .sub{color:var(--slate-light);margin-bottom:2.5rem;font-size:0.9375rem}
+.dir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.dir-item{background:var(--card-bg);border:1px solid var(--card-border);border-radius:6px;padding:1rem 1.25rem;text-decoration:none;display:flex;flex-direction:column;gap:0.25rem;transition:border-color 0.2s}
+.dir-item:hover{border-color:rgba(244,165,0,0.35)}
+.dir-name{font-weight:500;font-size:0.9rem;color:var(--white)}
+.dir-cat{font-size:0.75rem;color:var(--slate);font-family:'JetBrains Mono',monospace}
+
+/* VENDOR SUBMISSION */
+.submit-section{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:4rem 2rem}
+.submit-section h2{font-family:'DM Serif Display',serif;font-size:1.75rem;margin-bottom:0.5rem}
+.submit-section .sub{color:var(--slate-light);margin-bottom:2rem;font-size:0.9375rem}
+.form-wrap{background:var(--card-bg);border:1px solid var(--card-border);border-radius:8px;padding:2.5rem}
+.form-row{margin-bottom:1.25rem}
+.form-row label{display:block;font-size:0.8125rem;color:var(--slate-light);margin-bottom:0.4rem;font-weight:500}
+.form-row input,.form-row select,.form-row textarea{width:100%;background:rgba(10,22,40,0.8);border:1px solid var(--card-border);border-radius:4px;padding:0.65rem 0.9rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;transition:border-color 0.2s}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:none;border-color:rgba(244,165,0,0.5)}
+.form-row textarea{resize:vertical;min-height:80px}
+.form-row select option{background:var(--navy-mid)}
+.form-submit{background:var(--amber);color:var(--navy);border:none;padding:0.75rem 2rem;border-radius:4px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.9375rem;cursor:pointer;transition:background 0.2s;width:100%}
+.form-submit:hover{background:var(--amber-dim)}
+.form-note{font-size:0.75rem;color:var(--slate);text-align:center;margin-top:1rem}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:3rem 2rem}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem}
+.footer-logo{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--amber);text-decoration:none}
+.footer-copy{font-size:0.8rem;color:var(--slate);margin-top:0.4rem}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{color:var(--slate);text-decoration:none;font-size:0.8125rem;transition:color 0.2s}
+.footer-links a:hover{color:var(--white)}
+
+.section-divider{border:none;border-top:1px solid var(--rule);max-width:1200px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="meshforce-index.html" class="nav-logo">MeshForce <span>by Aric Civic Labs</span></a>
+    <ul class="nav-links">
+      <li><a href="meshforce-index.html" class="active">Home</a></li>
+      <li><a href="meshforce-tools.html">Tools</a></li>
+      <li><a href="meshforce-seam.html">Directory</a></li>
+      <li><a href="meshforce-seam.html#intelligence" class="nav-seam">The Seam ↗</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Workforce Management · Enterprise Capacity Planning · AI Integration</div>
+  <h1>Where Human Workforce Expertise <em>Meets</em> AI Operations</h1>
+  <p class="hero-sub">MeshForce is the definitive resource registry for WFM and ECP professionals navigating the integration of AI agents into workforce operations. Free tools, curated platforms, and live industry intelligence — all in one place.</p>
+  <div class="hero-ctas">
+    <a href="meshforce-tools.html" class="btn-primary">Browse 55+ Tools →</a>
+    <a href="meshforce-seam.html" class="btn-ghost">Explore the Directory</a>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-num">55+</div><div class="stat-label">Curated Tools & Calculators</div></div>
+    <div><div class="stat-num">8</div><div class="stat-label">Tool Categories</div></div>
+    <div><div class="stat-num">120+</div><div class="stat-label">Platforms & Resources</div></div>
+    <div><div class="stat-num">Live</div><div class="stat-label">Seam Intelligence Engine</div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section-grid">
+  <h2>Everything a WFM Professional Needs</h2>
+  <p class="sub">Three interconnected modules covering every aspect of AI-era workforce management.</p>
+  <div class="cards">
+    <a href="meshforce-tools.html" class="card">
+      <div class="card-icon">⚙️</div>
+      <h3>Practical Tools</h3>
+      <p>Erlang calculators, shrinkage & FTE tools, demand forecasting, scheduling helpers, AI agent builders, and KPI dashboards. Filtered by free, freemium, and paid.</p>
+      <span class="card-tag">55 tools · 8 categories →</span>
+    </a>
+    <a href="meshforce-seam.html" class="card">
+      <div class="card-icon">🗂️</div>
+      <h3>Platform Directory</h3>
+      <p>Curated listings of AI agents for workforce ops, WFM platforms, ECP software, research sources, professional associations, and training resources.</p>
+      <span class="card-tag">120+ resources →</span>
+    </a>
+    <a href="meshforce-seam.html#intelligence" class="card featured">
+      <div class="card-icon">⚡</div>
+      <h3>The Seam</h3>
+      <p>A live intelligence engine that crawls industry literature, research papers, vendor announcements, and best practices — surfacing what matters, when it matters.</p>
+      <span class="card-tag">Powered by AI · Live crawling →</span>
+    </a>
+  </div>
+</section>
+
+<section class="seam-section">
+  <div class="seam-inner">
+    <div class="seam-copy">
+      <h2>Subscribe to <em>The Seam</em></h2>
+      <p>The Seam is MeshForce's AI-powered intelligence engine. It continuously crawls WFM industry publications, academic research, vendor blogs, and professional forums — then synthesizes findings into actionable briefings tailored for practitioners.</p>
+      <p>From Erlang modeling advances to AI agent deployment case studies, The Seam keeps you ahead of the curve without the noise.</p>
+      <a href="meshforce-seam.html#intelligence" class="btn-primary">Open the Intelligence Engine →</a>
+    </div>
+    <div class="seam-tiers">
+      <div class="tier">
+        <div class="tier-header">
+          <span class="tier-name">Free Access</span>
+          <span class="tier-price">$0 / mo</span>
+        </div>
+        <div class="tier-desc">Weekly digest of top WFM/AI developments. Access to full tools library and platform directory. Community discussion threads.</div>
+      </div>
+      <div class="tier highlighted">
+        <div class="tier-header">
+          <span class="tier-name">Practitioner</span>
+          <span class="tier-price">$29 / mo</span>
+        </div>
+        <div class="tier-desc">Daily Seam intelligence briefings. Custom topic filters (contact center, back-office, AI agents). Research paper summaries. Priority vendor submission review.</div>
+      </div>
+      <div class="tier">
+        <div class="tier-header">
+          <span class="tier-name">Enterprise</span>
+          <span class="tier-price">$149 / mo</span>
+        </div>
+        <div class="tier-desc">Team access (up to 25 seats). Private Seam queries. Custom industry crawling topics. Quarterly briefing calls. White-labeled exports for internal distribution.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quick-dir">
+  <h2>Quick Directory</h2>
+  <p class="sub">Jump directly to leading platforms and resources. Full listings in the <a href="meshforce-seam.html" style="color:var(--amber)">Directory</a>.</p>
+  <div class="dir-grid">
+    <a href="https://www.nice.com/workforce-management" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">NICE WFM</span><span class="dir-cat">WFM Platform</span></a>
+    <a href="https://www.verint.com/workforce-management/" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">Verint WFM</span><span class="dir-cat">WFM Platform</span></a>
+    <a href="https://www.aspect.com" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">Aspect Workforce</span><span class="dir-cat">WFM Platform</span></a>
+    <a href="https://www.assembled.com" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">Assembled</span><span class="dir-cat">WFM · AI-native</span></a>
+    <a href="https://www.injixo.com" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">injixo</span><span class="dir-cat">WFM Platform</span></a>
+    <a href="https://www.anaplan.com" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">Anaplan</span><span class="dir-cat">Enterprise Capacity Planning</span></a>
+    <a href="https://www.workforceanalyst.com" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">WorkforceAnalyst</span><span class="dir-cat">Calculators · Free</span></a>
+    <a href="https://www.callcentrehelper.com" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">Call Centre Helper</span><span class="dir-cat">Resource Hub</span></a>
+    <a href="https://n8n.io" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">n8n</span><span class="dir-cat">AI Agent Builder</span></a>
+    <a href="https://www.gartner.com/en/human-resources" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">Gartner HR Research</span><span class="dir-cat">Research</span></a>
+    <a href="https://www.wfmglobal.org" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">WFM Global</span><span class="dir-cat">Association</span></a>
+    <a href="https://www.icmi.com" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">ICMI</span><span class="dir-cat">Training · Association</span></a>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="submit-section" id="submit-listing">
+  <h2>Submit a Listing</h2>
+  <p class="sub">Vendors and platform teams: submit your product for review. Free listings for open-source and free tools; sponsored placements available for commercial products.</p>
+  <div class="form-wrap">
+    <div class="form-row">
+      <label>Company / Product Name *</label>
+      <input type="text" placeholder="e.g. Acme WFM Suite">
+    </div>
+    <div class="form-row">
+      <label>Website URL *</label>
+      <input type="url" placeholder="https://yourproduct.com">
+    </div>
+    <div class="form-row">
+      <label>Primary Category *</label>
+      <select>
+        <option value="">Select a category…</option>
+        <option>WFM Platform</option>
+        <option>Enterprise Capacity Planning</option>
+        <option>AI Agent / Automation</option>
+        <option>Erlang / Staffing Calculator</option>
+        <option>Forecasting & Analytics</option>
+        <option>Scheduling Tool</option>
+        <option>Research / Publication</option>
+        <option>Training / Certification</option>
+        <option>Professional Association</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Pricing Model</label>
+      <select>
+        <option value="">Select…</option>
+        <option>Free</option>
+        <option>Freemium</option>
+        <option>Paid / Subscription</option>
+        <option>Enterprise Pricing</option>
+        <option>Open Source</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Brief Description (2–3 sentences)</label>
+      <textarea placeholder="What does your product do, and who is it for?"></textarea>
+    </div>
+    <div class="form-row">
+      <label>Contact Email *</label>
+      <input type="email" placeholder="you@company.com">
+    </div>
+    <button class="form-submit" onclick="alert('Thank you! Your submission will be reviewed within 5 business days.')">Submit for Review</button>
+    <p class="form-note">Submissions are reviewed by the MeshForce editorial team. Sponsored placements are clearly labeled. Questions? <a href="mailto:partnerships@aricciviclabs.org" style="color:var(--amber)">partnerships@aricciviclabs.org</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <a href="meshforce-index.html" class="footer-logo">MeshForce</a>
+      <p class="footer-copy">© 2026 MeshForce · An Aric Civic Labs Project · aricciviclabs.org/meshforce</p>
+    </div>
+    <div class="footer-links">
+      <a href="meshforce-tools.html">Tools</a>
+      <a href="meshforce-seam.html">Directory</a>
+      <a href="meshforce-seam.html#intelligence">The Seam</a>
+      <a href="#submit-listing">Submit Listing</a>
+      <a href="mailto:partnerships@aricciviclabs.org">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
