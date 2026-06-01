@@ -646,117 +646,138 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
 
 <script>
 // ===== SEAM INTELLIGENCE ENGINE =====
-let selectedTopic = '';
+
+// ── Environment detection (mirrors roi_v1 pattern) ────────────────────────
+var SEAM_SUPABASE_URL = 'https://epntzskzmdlfqyosscbc.supabase.co';
+var SEAM_PROXY_URL    = SEAM_SUPABASE_URL + '/functions/v1/claude-proxy';
+var SEAM_DIRECT_URL   = 'https://api.anthropic.com/v1/messages';
+
+var _seamIsWidget = (function() {
+  try {
+    var h = window.location.hostname || '';
+    return h === 'claude.ai' || h.indexOf('.claude.ai') !== -1;
+  } catch(e) { return false; }
+})();
+
+// ── Core API call (widget = direct with key injected; deployed = proxy) ───
+async function seamApiCall(systemPrompt, userMsg, useSearch) {
+  var payload = {
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 1000,
+    system: systemPrompt,
+    messages: [{ role: 'user', content: userMsg }]
+  };
+
+  if (_seamIsWidget) {
+    var headers = {
+      'Content-Type': 'application/json',
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    };
+    if (useSearch) headers['anthropic-beta'] = 'web-search-2025-03-05';
+    var r = await fetch(SEAM_DIRECT_URL, { method: 'POST', headers: headers, body: JSON.stringify(payload) });
+    if (!r.ok) { var eb = await r.json().catch(function(){ return {}; }); throw new Error('http ' + r.status + (eb.error ? ': ' + eb.error.message : '')); }
+    var d = await r.json();
+    if (d.error) throw new Error(d.error.message || 'api error');
+    return d;
+  }
+
+  // Deployed — route through Supabase proxy
+  var r2 = await fetch(SEAM_PROXY_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      tool: 'seam_search',
+      messages: payload.messages,
+      system: payload.system,
+      max_tokens: payload.max_tokens,
+      use_web_search: !!useSearch
+    })
+  });
+  if (!r2.ok) { var eb2 = await r2.json().catch(function(){ return {}; }); throw new Error('http ' + r2.status + (eb2.error ? ': ' + eb2.error.message : '')); }
+  var d2 = await r2.json();
+  if (d2.error) throw new Error(d2.error.message || 'proxy error');
+  return d2;
+}
+
+// ── Topic button selection ─────────────────────────────────────────────────
+var selectedTopic = '';
 
 function selectTopic(el, topic) {
-  document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.topic-btn').forEach(function(b) { b.classList.remove('selected'); });
   el.classList.add('selected');
   document.getElementById('queryInput').value = topic;
   selectedTopic = topic;
 }
 
+// ── Result helpers ─────────────────────────────────────────────────────────
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function parseResults(txt) {
+  var clean = txt.replace(/```json/g,'').replace(/```/g,'').trim();
+  var m = clean.match(/\[[\s\S]*\]/);
+  if (m) return JSON.parse(m[0]);
+  return JSON.parse(clean);
+}
+
+function renderResults(area, results) {
+  if (!Array.isArray(results) || results.length === 0) throw new Error('No results returned');
+  area.innerHTML = results.map(function(r) {
+    return '<div class="result-item">'
+      + '<div class="result-meta">'
+      + '<span class="result-source">' + escHtml(r.source || 'Source') + '</span>'
+      + '<span class="result-date">' + escHtml(r.date || '') + '</span>'
+      + '<span class="result-tag">' + escHtml(r.tag || 'Research') + '</span>'
+      + '</div>'
+      + '<div class="result-title">' + escHtml(r.title || '') + '</div>'
+      + '<div class="result-summary">' + escHtml(r.summary || '') + '</div>'
+      + (r.url ? '<a href="' + escHtml(r.url) + '" target="_blank" rel="noopener" class="result-link">Read more ↗</a>' : '')
+      + '</div>';
+  }).join('');
+}
+
+// ── Main search function ───────────────────────────────────────────────────
 async function runSeamSearch() {
   var query = document.getElementById('queryInput').value.trim();
   if (!query) return;
 
-  var btn = document.getElementById('searchBtn');
+  var btn  = document.getElementById('searchBtn');
   var area = document.getElementById('resultsArea');
   btn.disabled = true;
   btn.textContent = 'Searching…';
-
   area.innerHTML = '<div class="loading-state"><div style="margin-bottom:1rem">The Seam is searching industry literature…</div><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
 
-  var systemPrompt = 'You are The Seam, an AI intelligence engine for workforce management (WFM) and enterprise capacity planning (ECP) professionals. Synthesize authoritative, current information on workforce management topics.\n\nReturn ONLY a JSON array (no markdown, no preamble, no backticks) with this exact structure:\n[\n  {\n    "source": "SOURCE NAME",\n    "date": "Month Year or Recent",\n    "tag": "CATEGORY",\n    "title": "Descriptive Title of Finding",\n    "summary": "2-3 sentence practical summary for WFM/ECP practitioners with specific data or recommendations where available.",\n    "url": ""\n  }\n]\n\nCategories: Research, Industry Trend, Best Practice, Tool Update, Vendor News, Case Study, Framework, Academic. Return 3-5 items.';
+  var systemPrompt = 'You are The Seam, an AI intelligence engine for workforce management (WFM) and enterprise capacity planning (ECP) professionals. Synthesize authoritative, current information on workforce management topics.\n\nReturn ONLY a JSON array (no markdown, no preamble, no backticks) with this exact structure:\n[\n  {\n    "source": "SOURCE NAME",\n    "date": "Month Year or Recent",\n    "tag": "CATEGORY",\n    "title": "Descriptive Title of Finding",\n    "summary": "2-3 sentence practical summary for WFM/ECP practitioners with specific data or recommendations where available.",\n    "url": ""\n  }\n]\nCategories: Research, Industry Trend, Best Practice, Tool Update, Vendor News, Case Study, Framework, Academic. Return 3-5 items.';
 
-  var userMsg = 'Synthesize 3-5 current findings on this WFM/ECP topic: ' + query;
+  var userMsg      = 'Synthesize 3-5 current findings on this WFM/ECP topic: ' + query;
+  var userMsgNoWeb = userMsg + ' Draw on your training knowledge about WFM industry research, best practices, and vendor landscape.';
 
-  function parseResults(txt) {
-    var clean = txt.replace(/```json/g,'').replace(/```/g,'').trim();
-    var m = clean.match(/\[[\s\S]*\]/);
-    if (m) return JSON.parse(m[0]);
-    return JSON.parse(clean);
-  }
-
-  function renderResults(results) {
-    if (!Array.isArray(results) || results.length === 0) throw new Error('No results returned');
-    area.innerHTML = results.map(function(r) {
-      return '<div class="result-item">'
-        + '<div class="result-meta">'
-        + '<span class="result-source">' + escHtml(r.source || 'Source') + '</span>'
-        + '<span class="result-date">' + escHtml(r.date || '') + '</span>'
-        + '<span class="result-tag">' + escHtml(r.tag || 'Research') + '</span>'
-        + '</div>'
-        + '<div class="result-title">' + escHtml(r.title || '') + '</div>'
-        + '<div class="result-summary">' + escHtml(r.summary || '') + '</div>'
-        + (r.url ? '<a href="' + escHtml(r.url) + '" target="_blank" rel="noopener" class="result-link">Read more ↗</a>' : '')
-        + '</div>';
-    }).join('');
-  }
-
-  // First attempt: with web_search tool
+  // Pass 1: with web search
   try {
-    var r1 = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: systemPrompt,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{ role: 'user', content: userMsg }]
-      })
-    });
-    if (!r1.ok) throw new Error('http_' + r1.status);
-    var d1 = await r1.json();
-    if (d1.error) throw new Error(d1.error.message || 'api_error');
+    var d1  = await seamApiCall(systemPrompt, userMsg, true);
     var txt1 = (d1.content || []).map(function(b){ return b.type === 'text' ? b.text : ''; }).join('');
-    if (!txt1 || txt1.length < 10) throw new Error('empty_response');
-    renderResults(parseResults(txt1));
-    btn.disabled = false;
-    btn.textContent = 'Search →';
+    if (!txt1 || txt1.length < 10) throw new Error('empty');
+    renderResults(area, parseResults(txt1));
+    btn.disabled = false; btn.textContent = 'Search →';
     return;
-  } catch(e1) {
-    // Fall through to second attempt without web_search tool
-  }
+  } catch(e1) { /* fall through */ }
 
-  // Second attempt: no web_search tool (works in more environments)
+  // Pass 2: without web search (training knowledge)
   try {
-    var r2 = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: userMsg + ' Draw on your training knowledge about WFM industry research, best practices, and vendor landscape.' }]
-      })
-    });
-    if (!r2.ok) throw new Error('http_' + r2.status);
-    var d2 = await r2.json();
-    if (d2.error) throw new Error(d2.error.message || 'api_error');
+    var d2   = await seamApiCall(systemPrompt, userMsgNoWeb, false);
     var txt2 = (d2.content || []).map(function(b){ return b.type === 'text' ? b.text : ''; }).join('');
-    if (!txt2 || txt2.length < 10) throw new Error('empty_response');
-    renderResults(parseResults(txt2));
+    if (!txt2 || txt2.length < 10) throw new Error('empty');
+    renderResults(area, parseResults(txt2));
   } catch(e2) {
     area.innerHTML = '<div class="error-state"><strong>Search encountered an issue.</strong><br>'
-      + (e2.message || 'Please try again or rephrase your query.')
+      + escHtml(e2.message || 'Please try again or rephrase your query.')
       + '<br><br><small>The Seam requires an active Anthropic API connection. If you\'re previewing locally, the full intelligence engine is available on aricciviclabs.org/meshforce.</small></div>';
   }
 
   btn.disabled = false;
   btn.textContent = 'Search →';
-}
-
-function escHtml(str) {
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 document.getElementById('queryInput').addEventListener('keydown', function(e) {
