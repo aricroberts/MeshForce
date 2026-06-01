@@ -52,6 +52,9 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
 .nav-links a:hover,.nav-links a.active{color:var(--amber)}
 .nav-seam{background:var(--amber);color:var(--navy)!important;padding:0.35rem 1rem;border-radius:4px;font-weight:600!important}
 .nav-seam:hover{background:var(--amber-dim)!important;color:var(--navy)!important}
+.nav-ecosystem{display:flex;gap:0.5rem;align-items:center}
+.nav-eco-link{color:var(--slate-light);text-decoration:none;font-size:0.8rem;font-weight:500;padding:0.3rem 0.7rem;border:1px solid var(--card-border);border-radius:4px;transition:all 0.2s;white-space:nowrap}
+.nav-eco-link:hover{color:var(--amber);border-color:rgba(244,165,0,0.4)}
 
 /* HERO */
 .hero{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:6rem 2rem 4rem}
@@ -140,10 +143,14 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:3rem
     <a href="meshforce-index.html" class="nav-logo">MeshForce <span>by Aric Civic Labs</span></a>
     <ul class="nav-links">
       <li><a href="meshforce-index.html" class="active">Home</a></li>
-      <li><a href="tools.html">Tools</a></li>
-      <li><a href="seam.html">Directory</a></li>
-      <li><a href="seam.html#intelligence" class="nav-seam">The Seam ↗</a></li>
+      <li><a href="meshforce-tools.html">Tools</a></li>
+      <li><a href="meshforce-seam.html">Directory</a></li>
     </ul>
+    <div class="nav-ecosystem">
+      <a href="../index.html" class="nav-eco-link">receipts.</a>
+      <a href="../transitions_index.html" class="nav-eco-link">Transitions</a>
+      <a href="../aricciviclabs.html" class="nav-eco-link">Aric Civic Labs</a>
+    </div>
   </div>
 </nav>
 
@@ -152,12 +159,12 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:3rem
   <h1>Where Human Workforce Expertise <em>Meets</em> AI Operations</h1>
   <p class="hero-sub">MeshForce is the definitive resource registry for WFM and ECP professionals navigating the integration of AI agents into workforce operations. Free tools, curated platforms, and live industry intelligence — all in one place.</p>
   <div class="hero-ctas">
-    <a href="tools.html" class="btn-primary">Browse 55+ Tools →</a>
-    <a href="seam.html" class="btn-ghost">Explore the Directory</a>
+    <a href="meshforce-tools.html" class="btn-primary">Browse Tools →</a>
+    <a href="meshforce-seam.html" class="btn-ghost">Explore the Directory</a>
   </div>
   <div class="hero-stats">
-    <div><div class="stat-num">55+</div><div class="stat-label">Curated Tools & Calculators</div></div>
-    <div><div class="stat-num">8</div><div class="stat-label">Tool Categories</div></div>
+    <div><div class="stat-num">13</div><div class="stat-label">Tools & Calculators</div></div>
+    <div><div class="stat-num">6</div><div class="stat-label">Tool Categories</div></div>
     <div><div class="stat-num">120+</div><div class="stat-label">Platforms & Resources</div></div>
     <div><div class="stat-num">Live</div><div class="stat-label">Seam Intelligence Engine</div></div>
   </div>
@@ -169,19 +176,19 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:3rem
   <h2>Everything a WFM Professional Needs</h2>
   <p class="sub">Three interconnected modules covering every aspect of AI-era workforce management.</p>
   <div class="cards">
-    <a href="tools.html" class="card">
+    <a href="meshforce-tools.html" class="card">
       <div class="card-icon">⚙️</div>
       <h3>Practical Tools</h3>
       <p>Erlang calculators, shrinkage & FTE tools, demand forecasting, scheduling helpers, AI agent builders, and KPI dashboards. Filtered by free, freemium, and paid.</p>
-      <span class="card-tag">55 tools · 8 categories →</span>
+      <span class="card-tag">13 tools · 6 categories →</span>
     </a>
-    <a href="seam.html" class="card">
+    <a href="meshforce-seam.html" class="card">
       <div class="card-icon">🗂️</div>
       <h3>Platform Directory</h3>
       <p>Curated listings of AI agents for workforce ops, WFM platforms, ECP software, research sources, professional associations, and training resources.</p>
       <span class="card-tag">120+ resources →</span>
     </a>
-    <a href="seam.html#intelligence" class="card featured">
+    <a href="meshforce-seam.html#intelligence" class="card featured">
       <div class="card-icon">⚡</div>
       <h3>The Seam</h3>
       <p>A live intelligence engine that crawls industry literature, research papers, vendor announcements, and best practices — surfacing what matters, when it matters.</p>
@@ -196,7 +203,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:3rem
       <h2>Subscribe to <em>The Seam</em></h2>
       <p>The Seam is MeshForce's AI-powered intelligence engine. It continuously crawls WFM industry publications, academic research, vendor blogs, and professional forums — then synthesizes findings into actionable briefings tailored for practitioners.</p>
       <p>From Erlang modeling advances to AI agent deployment case studies, The Seam keeps you ahead of the curve without the noise.</p>
-      <a href="seam.html#intelligence" class="btn-primary">Open the Intelligence Engine →</a>
+      <a href="meshforce-seam.html#intelligence" class="btn-primary">Open the Intelligence Engine →</a>
     </div>
     <div class="seam-tiers">
       <div class="tier">
@@ -226,7 +233,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:3rem
 
 <section class="quick-dir">
   <h2>Quick Directory</h2>
-  <p class="sub">Jump directly to leading platforms and resources. Full listings in the <a href="seam.html" style="color:var(--amber)">Directory</a>.</p>
+  <p class="sub">Jump directly to leading platforms and resources. Full listings in the <a href="meshforce-seam.html" style="color:var(--amber)">Directory</a>.</p>
   <div class="dir-grid">
     <a href="https://www.nice.com/workforce-management" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">NICE WFM</span><span class="dir-cat">WFM Platform</span></a>
     <a href="https://www.verint.com/workforce-management/" target="_blank" rel="noopener" class="dir-item"><span class="dir-name">Verint WFM</span><span class="dir-cat">WFM Platform</span></a>
@@ -304,9 +311,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:3rem
       <p class="footer-copy">© 2026 MeshForce · An Aric Civic Labs Project · aricciviclabs.org/meshforce</p>
     </div>
     <div class="footer-links">
-      <a href="tools.html">Tools</a>
-      <a href="seam.html">Directory</a>
-      <a href="seam.html#intelligence">The Seam</a>
+      <a href="meshforce-tools.html">Tools</a>
+      <a href="meshforce-seam.html">Directory</a>
+      <a href="meshforce-seam.html#intelligence">The Seam</a>
       <a href="#submit-listing">Submit Listing</a>
       <a href="mailto:partnerships@aricciviclabs.org">Contact</a>
     </div>

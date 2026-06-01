@@ -25,6 +25,9 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
 .nav-links a{color:var(--slate-light);text-decoration:none;font-size:0.875rem;font-weight:500;transition:color 0.2s}
 .nav-links a:hover,.nav-links a.active{color:var(--amber)}
 .nav-seam{background:var(--amber);color:var(--navy)!important;padding:0.35rem 1rem;border-radius:4px;font-weight:600!important}
+.nav-ecosystem{display:flex;gap:0.5rem;align-items:center}
+.nav-eco-link{color:var(--slate-light);text-decoration:none;font-size:0.8rem;font-weight:500;padding:0.3rem 0.7rem;border:1px solid var(--card-border);border-radius:4px;transition:all 0.2s;white-space:nowrap}
+.nav-eco-link:hover{color:var(--amber);border-color:rgba(244,165,0,0.4)}
 
 /* PAGE HEADER */
 .page-header{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:4rem 2rem 2rem}
@@ -123,8 +126,13 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
       <li><a href="index.html">Home</a></li>
       <li><a href="tools.html">Tools</a></li>
       <li><a href="seam.html" class="active">Directory</a></li>
-      <li><a href="#intelligence" class="nav-seam">The Seam ↗</a></li>
     </ul>
+    <div class="nav-ecosystem">
+      <a href="meshforce-index.html" class="nav-eco-link">MeshForce</a>
+      <a href="../index.html" class="nav-eco-link">receipts.</a>
+      <a href="../transitions_index.html" class="nav-eco-link">Transitions</a>
+      <a href="../aricciviclabs.html" class="nav-eco-link">Aric Civic Labs</a>
+    </div>
   </div>
 </nav>
 
