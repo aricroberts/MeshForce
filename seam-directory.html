@@ -122,6 +122,24 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
 #rcp-notice-close{background:none;border:none;color:rgba(244,165,0,0.3);cursor:pointer;font-size:16px;line-height:1;padding:0 0 0 .5rem;flex-shrink:0}
 #rcp-notice-close:hover{color:var(--slate-light)}
 /* ── /Privacy notice bar ── */
+
+/* ── Contact modal ── */
+#contact-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:9000;align-items:center;justify-content:center}
+#contact-modal-overlay.open{display:flex}
+#contact-modal{background:#112240;border:1px solid rgba(244,165,0,.3);border-radius:8px;padding:2rem;width:100%;max-width:420px;margin:1rem;position:relative}
+#contact-modal h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.25rem;color:#e8e6e1;margin-bottom:1.25rem}
+.cm-row{margin-bottom:1rem}
+.cm-row label{display:block;font-size:.8rem;color:#a8b2d8;margin-bottom:.35rem}
+.cm-row input,.cm-row textarea{width:100%;background:rgba(10,22,40,.8);border:1px solid rgba(168,178,216,.15);border-radius:4px;padding:.6rem .85rem;color:#e8e6e1;font-family:'DM Sans',sans-serif;font-size:.875rem;transition:border-color .2s}
+.cm-row input:focus,.cm-row textarea:focus{outline:none;border-color:rgba(244,165,0,.5)}
+.cm-row textarea{resize:vertical;min-height:90px}
+#cm-submit{background:#f4a500;color:#0a1628;border:none;padding:.65rem 1.75rem;border-radius:4px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;transition:background .2s;width:100%}
+#cm-submit:hover{background:#c47f00}
+#cm-submit:disabled{opacity:.6;cursor:not-allowed}
+#cm-status{margin-top:.75rem;font-size:.8125rem;text-align:center;min-height:1.2em}
+#cm-close{position:absolute;top:.75rem;right:.9rem;background:none;border:none;color:#8892b0;font-size:1.25rem;cursor:pointer;line-height:1}
+#cm-close:hover{color:#e8e6e1}
+/* ── /Contact modal ── */
 </style>
 </head>
 <body>
@@ -688,7 +706,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
       <input type="email" id="sub-email" placeholder="you@company.com">
     </div>
     <button class="form-submit" onclick="submitListing()">Submit for Review →</button>
-    <p class="form-note">Submissions are reviewed by the MeshForce editorial team within 5 business days. Sponsored placements are clearly labeled. Questions? <a href="mailto:partnerships@aricciviclabs.org" style="color:var(--amber)">partnerships@aricciviclabs.org</a></p>
+    <p class="form-note">Submissions are reviewed by the MeshForce editorial team within 5 business days. Sponsored placements are clearly labeled. Questions? <a href="mailto:aricroberts@gmail.com" style="color:var(--amber)">aricroberts@gmail.com</a></p>
   </div>
 </section>
 
@@ -702,7 +720,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
       <a href="index.html">Home</a>
       <a href="tools.html">Tools</a>
       <a href="#submit-listing">Submit Listing</a>
-      <a href="mailto:partnerships@aricciviclabs.org">Contact</a>
+      <a href="#" onclick="openCM();return false;">Contact</a>
     </div>
   </div>
 </footer>
@@ -718,8 +736,85 @@ function submitListing() {
     alert('Please fill in all required fields before submitting.');
     return;
   }
-  alert('Thank you for submitting ' + name + '!\n\nYour listing will be reviewed by the MeshForce editorial team within 5 business days. We\'ll be in touch at ' + email + '.');
+  var btn = document.querySelector('.form-submit');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+  fetch('https://formspree.io/f/mbdbkznw', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _replyto: email,
+      _subject: 'MeshForce Listing Submission: ' + name,
+      'Product Name': name,
+      'Website URL': url,
+      'Category': cat,
+      'Description': desc,
+      'Submitter Email': email
+    })
+  })
+  .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+  .then(function(res) {
+    if (btn) { btn.disabled = false; btn.textContent = 'Submit for Review →'; }
+    if (res.ok) {
+      alert('Thank you for submitting ' + name + '!
+
+Your listing will be reviewed within 5 business days. We\'ll be in touch at ' + email + '.');
+      document.getElementById('sub-name').value = '';
+      document.getElementById('sub-url').value = '';
+      document.getElementById('sub-category').value = '';
+      document.getElementById('sub-desc').value = '';
+      document.getElementById('sub-email').value = '';
+    } else {
+      alert('Submission failed — please email aricroberts@gmail.com directly with your listing details.');
+    }
+  })
+  .catch(function() {
+    if (btn) { btn.disabled = false; btn.textContent = 'Submit for Review →'; }
+    alert('Could not send — please email aricroberts@gmail.com directly.');
+  });
 }
+
+/* ── Contact modal JS ── */
+function openCM(){document.getElementById('contact-modal-overlay').classList.add('open');document.getElementById('cm-name').focus();}
+function closeCM(){document.getElementById('contact-modal-overlay').classList.remove('open');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCM();});
+document.getElementById('contact-modal-overlay').addEventListener('click',function(e){if(e.target===this)closeCM();});
+function sendCM(){
+  var name=(document.getElementById('cm-name').value||'').trim();
+  var email=(document.getElementById('cm-email').value||'').trim();
+  var msg=(document.getElementById('cm-message').value||'').trim();
+  var status=document.getElementById('cm-status');
+  if(!name||!email||!msg){status.style.color='#F0514F';status.textContent='Please fill in all fields.';return;}
+  var btn=document.getElementById('cm-submit');
+  btn.disabled=true;btn.textContent='Sending…';status.textContent='';
+  fetch('https://formspree.io/f/mbdbkznw',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({name:name,email:email,message:msg,_replyto:email,_subject:'Contact from MeshForce: '+name})
+  })
+  .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+  .then(function(res){
+    btn.disabled=false;btn.textContent='Send Message';
+    if(res.ok){status.style.color='#2ECC8A';status.textContent="Sent! We'll be in touch soon.";
+      setTimeout(function(){closeCM();document.getElementById('cm-name').value='';document.getElementById('cm-email').value='';document.getElementById('cm-message').value='';status.textContent='';},2000);
+    }else{status.style.color='#F0514F';status.textContent='Something went wrong — email aricroberts@gmail.com directly.';}
+  })
+  .catch(function(){btn.disabled=false;btn.textContent='Send Message';status.style.color='#F0514F';status.textContent='Network error — email aricroberts@gmail.com directly.';});
+}
+/* ── /Contact modal JS ── */
 </script>
+
+<!-- ── Contact modal ── -->
+<div id="contact-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="cm-title">
+  <div id="contact-modal">
+    <button id="cm-close" onclick="closeCM()" aria-label="Close">&times;</button>
+    <h3 id="cm-title">Get in Touch</h3>
+    <div class="cm-row"><label>Name *</label><input id="cm-name" type="text" placeholder="Your name"></div>
+    <div class="cm-row"><label>Email *</label><input id="cm-email" type="email" placeholder="you@example.com"></div>
+    <div class="cm-row"><label>Message *</label><textarea id="cm-message" placeholder="How can we help?"></textarea></div>
+    <button id="cm-submit" onclick="sendCM()">Send Message</button>
+    <div id="cm-status"></div>
+  </div>
+</div>
+<!-- ── /Contact modal ── -->
 </body>
 </html>
