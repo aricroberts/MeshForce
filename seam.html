@@ -69,6 +69,8 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
 .result-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
 .result-meta{display:flex;gap:0.65rem;align-items:center;margin-bottom:0.5rem;flex-wrap:wrap}
 .result-source{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.04em}
+.result-source-link{text-decoration:none;transition:opacity 0.2s}
+.result-source-link:hover{opacity:0.75;text-decoration:underline}
 .result-date{font-size:0.75rem;color:var(--slate)}
 .result-tag{font-size:0.65rem;background:rgba(168,178,216,0.1);color:var(--slate-light);padding:0.15rem 0.45rem;border-radius:3px;border:1px solid var(--card-border)}
 .result-title{font-weight:600;font-size:0.9375rem;margin-bottom:0.4rem;color:var(--white);line-height:1.45}
@@ -305,18 +307,40 @@ function parseResults(txt) {
   return JSON.parse(clean);
 }
 
+function parseDateScore(dateStr) {
+  if (!dateStr) return 0;
+  var d = new Date(dateStr);
+  if (!isNaN(d.getTime())) return d.getTime();
+  // Handle "Month Year" format like "June 2025"
+  var months = {january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
+  var parts = dateStr.toLowerCase().split(/\s+/);
+  if (parts.length >= 2) {
+    var mo = months[parts[0]];
+    var yr = parseInt(parts[parts.length - 1], 10);
+    if (mo !== undefined && !isNaN(yr)) return new Date(yr, mo, 1).getTime();
+  }
+  if (/recent|latest|current/i.test(dateStr)) return Date.now();
+  return 0;
+}
+
 function renderResults(area, results) {
   if (!Array.isArray(results) || results.length === 0) throw new Error('No results returned');
-  area.innerHTML = results.map(function(r) {
+  // Sort newest first
+  var sorted = results.slice().sort(function(a, b) {
+    return parseDateScore(b.date) - parseDateScore(a.date);
+  });
+  area.innerHTML = sorted.map(function(r) {
+    var sourceHtml = r.url
+      ? '<a href="' + escHtml(r.url) + '" target="_blank" rel="noopener" class="result-source result-source-link">' + escHtml(r.source || 'Source') + ' ↗</a>'
+      : '<span class="result-source">' + escHtml(r.source || 'Source') + '</span>';
     return '<div class="result-item">'
       + '<div class="result-meta">'
-      + '<span class="result-source">' + escHtml(r.source || 'Source') + '</span>'
+      + sourceHtml
       + '<span class="result-date">'   + escHtml(r.date   || '')       + '</span>'
       + '<span class="result-tag">'    + escHtml(r.tag    || 'Research') + '</span>'
       + '</div>'
       + '<div class="result-title">'   + escHtml(r.title   || '') + '</div>'
       + '<div class="result-summary">' + escHtml(r.summary || '') + '</div>'
-      + (r.url ? '<a href="' + escHtml(r.url) + '" target="_blank" rel="noopener" class="result-link">Read more ↗</a>' : '')
       + '</div>';
   }).join('');
 }
