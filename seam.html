@@ -355,13 +355,13 @@ function runSeamSearch() {
   btn.textContent = 'Searching…';
   area.innerHTML = '<div class="loading-state"><div style="margin-bottom:1rem;font-size:0.875rem">The Seam is searching industry literature…</div><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
 
-  var SYS = 'You are The Seam, an AI intelligence engine for workforce management (WFM) and enterprise capacity planning (ECP) professionals. Synthesize authoritative, current information on workforce management topics.\n\nReturn ONLY a JSON array (no markdown, no preamble, no backticks) with this exact structure:\n[\n  {\n    "source": "SOURCE NAME",\n    "date": "Month Year or Recent",\n    "tag": "CATEGORY",\n    "title": "Descriptive Title of Finding",\n    "summary": "2-3 sentence practical summary for WFM/ECP practitioners with specific data or recommendations where available.",\n    "url": ""\n  }\n]\nCategories: Research, Industry Trend, Best Practice, Tool Update, Vendor News, Case Study, Framework, Academic. Return 3-5 items.';
+  var SYS = 'You are The Seam, an AI intelligence engine for workforce management (WFM) and enterprise capacity planning (ECP) professionals. Synthesize authoritative, current information on workforce management topics.\n\nReturn ONLY a JSON array (no markdown, no preamble, no backticks) with this exact structure:\n[\n  {\n    "source": "SOURCE NAME",\n    "date": "Month Year or Year",\n    "tag": "CATEGORY",\n    "title": "Descriptive Title of Finding",\n    "summary": "2-3 sentence practical summary for WFM/ECP practitioners with specific data or recommendations where available.",\n    "url": "https://actual-source-url.com/page"\n  }\n]\n\nCRITICAL URL RULES: Every result MUST include a real working URL from your web search results. Use the exact URL the search tool returned. Do NOT invent, guess, or leave URLs empty. If you cannot find a real URL for a finding, omit that finding entirely. Never return an empty string or placeholder for url.\n\nCategories: Research, Industry Trend, Best Practice, Tool Update, Vendor News, Case Study, Framework, Academic. Return 3-5 items, every one with a real URL.';
 
   var basePayload = { model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: SYS };
 
   // Pass 1 — with web search
   apiCall(Object.assign({}, basePayload, {
-    messages: [{ role: 'user', content: 'Synthesize 3-5 current findings on this WFM/ECP topic: ' + query }]
+    messages: [{ role: 'user', content: 'Synthesize 3-5 current findings on this WFM/ECP topic. Search the web for real sources and include the actual URL for EVERY result — no empty URLs. Topic: ' + query }]
   }), true)
   .then(function(d1) {
     var txt1 = (d1.content || []).map(function(b){ return b.type === 'text' ? b.text : ''; }).join('');
