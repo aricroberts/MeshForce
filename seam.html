@@ -154,6 +154,43 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
 #cm-close{position:absolute;top:.75rem;right:.9rem;background:none;border:none;color:#8892b0;font-size:1.25rem;cursor:pointer;line-height:1}
 #cm-close:hover{color:#e8e6e1}
 /* ── /Contact modal ── */
+
+/* ── Seam Paywall ── */
+.seam-turn-counter{display:flex;align-items:center;gap:0.5rem;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--slate);margin-bottom:0.75rem}
+.seam-turn-pips{display:flex;gap:4px}
+.seam-pip{width:8px;height:8px;border-radius:50%;background:var(--amber);opacity:0.25;transition:opacity 0.3s}
+.seam-pip.used{opacity:1}
+.seam-pip.last{background:#f87171}
+
+#seam-paywall-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:8000;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+#seam-paywall-overlay.open{display:flex}
+#seam-paywall-modal{background:linear-gradient(135deg,#112240,#0a1628);border:1px solid rgba(244,165,0,0.4);border-radius:12px;padding:2.5rem;width:100%;max-width:480px;margin:1rem;position:relative;box-shadow:0 30px 80px rgba(0,0,0,0.5)}
+.pw-icon{font-size:2.5rem;margin-bottom:1rem;text-align:center}
+.pw-title{font-family:'DM Serif Display',serif;font-size:1.75rem;text-align:center;margin-bottom:0.5rem}
+.pw-sub{color:var(--slate-light);font-size:0.9rem;text-align:center;line-height:1.6;margin-bottom:2rem}
+.pw-plans{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.5rem}
+.pw-plan{border:1px solid var(--card-border);border-radius:8px;padding:1.25rem 1.5rem;cursor:pointer;transition:all 0.2s;display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:inherit}
+.pw-plan:hover{border-color:rgba(244,165,0,0.5);background:rgba(244,165,0,0.06);transform:translateY(-1px)}
+.pw-plan.featured{border-color:rgba(244,165,0,0.4);background:rgba(244,165,0,0.05)}
+.pw-plan-label{font-size:0.8rem;font-family:'JetBrains Mono',monospace;color:var(--amber);letter-spacing:0.06em;margin-bottom:0.2rem}
+.pw-plan-name{font-weight:600;font-size:1rem;margin-bottom:0.15rem}
+.pw-plan-desc{font-size:0.78rem;color:var(--slate);line-height:1.4}
+.pw-plan-price{text-align:right;flex-shrink:0;margin-left:1.5rem}
+.pw-price-main{font-family:'JetBrains Mono',monospace;font-size:1.25rem;color:var(--amber);font-weight:600}
+.pw-price-period{font-size:0.72rem;color:var(--slate);display:block}
+.pw-price-savings{font-size:0.7rem;color:#6ee7b7;display:block;margin-top:0.1rem}
+.pw-dismiss{width:100%;background:none;border:none;color:var(--slate);font-size:0.8125rem;font-family:'DM Sans',sans-serif;cursor:pointer;padding:0.5rem;transition:color 0.2s}
+.pw-dismiss:hover{color:var(--slate-light)}
+
+/* Export Briefing button */
+.export-row{display:flex;justify-content:flex-end;margin-top:1rem}
+.export-btn{background:rgba(17,34,64,0.9);border:1px solid rgba(244,165,0,0.3);color:var(--amber);padding:0.55rem 1.25rem;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.8125rem;font-weight:600;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:0.5rem}
+.export-btn:hover{background:rgba(244,165,0,0.1);border-color:rgba(244,165,0,0.6)}
+.export-btn-lock{font-size:0.75rem;opacity:0.7}
+
+/* Unlock banner */
+.unlock-banner{background:rgba(110,231,183,0.08);border:1px solid rgba(110,231,183,0.25);border-radius:6px;padding:0.6rem 1rem;font-size:0.8rem;color:#6ee7b7;display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem}
+/* ── /Seam Paywall ── */
 </style>
 </head>
 <body>
@@ -221,12 +258,20 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
         <button class="topic-btn" onclick="selectTopic(this,'real-time adherence best practices WFM')">Real-Time Adherence</button>
         <button class="topic-btn" onclick="selectTopic(this,'omnichannel workforce management contact center 2025')">Omnichannel WFM</button>
       </div>
+      <div id="seamUnlockBanner" class="unlock-banner" style="display:none">✓ Practitioner access unlocked — unlimited searches this session.</div>
+      <div id="seamTurnCounter" class="seam-turn-counter">
+        <span class="seam-turn-pips"><span class="seam-pip" id="pip1"></span><span class="seam-pip" id="pip2"></span><span class="seam-pip" id="pip3"></span></span>
+        <span id="turnCounterLabel">3 free searches remaining</span>
+      </div>
       <div class="query-row">
         <input class="query-input" id="queryInput" type="text" placeholder="e.g. 'What are the latest WFM AI agent deployment patterns in healthcare?'" />
         <button class="search-btn" id="searchBtn" onclick="runSeamSearch()">Search →</button>
       </div>
       <div class="results-area" id="resultsArea">
         <p class="results-placeholder">Select a topic above or enter your own query.<br><strong>The Seam will search current industry literature and synthesize key findings for WFM and ECP practitioners.</strong></p>
+      </div>
+      <div class="export-row" id="exportRow" style="display:none">
+        <button class="export-btn" onclick="handleExportBriefing()"><span id="exportLockIcon">🔒</span> Export Briefing PDF</button>
       </div>
       <p class="seam-note">The Seam uses AI with web search to surface current industry developments. Results are synthesized for practitioner relevance. Sources are linked by publisher — not by specific article.</p>
     </div>
@@ -278,6 +323,155 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
 </footer>
 
 <script>
+/* ── Seam Paywall & Unlock ── */
+var SEAM_SS_KEY = 'rcpts_seam_unlocked';
+var SEAM_FREE_LIMIT = 3;
+var _seamSearchCount = 0;
+
+var SEAM_STRIPE_LINKS = {
+  monthly: 'https://buy.stripe.com/14AfZi9Meg1Y7PV5JV7N60w',
+  annual:  'https://buy.stripe.com/14AdRa0bE5nk0nt4FR7N60x'
+};
+var SEAM_SUCCESS_PARAM = 'seam_unlocked';
+
+function isSeamUnlocked() {
+  try { return sessionStorage.getItem(SEAM_SS_KEY) === '1'; } catch(e) { return false; }
+}
+
+function unlockSeam() {
+  try { sessionStorage.setItem(SEAM_SS_KEY, '1'); } catch(e) {}
+  updateSeamUI();
+}
+
+function updateSeamUI() {
+  var unlocked = isSeamUnlocked();
+  var counter = document.getElementById('seamTurnCounter');
+  var banner  = document.getElementById('seamUnlockBanner');
+  var lockIcon = document.getElementById('exportLockIcon');
+  if (unlocked) {
+    if (counter) counter.style.display = 'none';
+    if (banner)  banner.style.display = 'flex';
+    if (lockIcon) lockIcon.textContent = '↓';
+  } else {
+    if (counter) counter.style.display = 'flex';
+    if (banner)  banner.style.display = 'none';
+    if (lockIcon) lockIcon.textContent = '🔒';
+    updatePips();
+  }
+}
+
+function updatePips() {
+  var remaining = Math.max(0, SEAM_FREE_LIMIT - _seamSearchCount);
+  for (var i = 1; i <= SEAM_FREE_LIMIT; i++) {
+    var pip = document.getElementById('pip' + i);
+    if (!pip) continue;
+    pip.classList.remove('used', 'last');
+    if (i <= _seamSearchCount) {
+      pip.classList.add('used');
+      if (i === SEAM_FREE_LIMIT) pip.classList.add('last');
+    }
+  }
+  var label = document.getElementById('turnCounterLabel');
+  if (label) {
+    if (remaining === 0) label.textContent = 'Free searches used — upgrade for unlimited';
+    else if (remaining === 1) label.textContent = '1 free search remaining';
+    else label.textContent = remaining + ' free searches remaining';
+  }
+}
+
+function openSeamPaywall() {
+  var overlay = document.getElementById('seam-paywall-overlay');
+  if (overlay) overlay.classList.add('open');
+}
+
+function closeSeamPaywall() {
+  var overlay = document.getElementById('seam-paywall-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function handleSeamCheckout(tier) {
+  var link = SEAM_STRIPE_LINKS[tier];
+  if (!link) return true;
+  var successUrl = encodeURIComponent(window.location.origin + window.location.pathname + '?seam_unlocked=1&product=seam_practitioner');
+  window.location.href = link + '?success_url=' + successUrl;
+  return false;
+}
+
+function handleExportBriefing() {
+  if (!isSeamUnlocked()) {
+    openSeamPaywall();
+    return;
+  }
+  exportBriefingPDF();
+}
+
+function exportBriefingPDF() {
+  var area = document.getElementById('resultsArea');
+  if (!area) return;
+  var query = (document.getElementById('queryInput').value || 'WFM Intelligence Briefing').trim();
+  var items = area.querySelectorAll('.result-item');
+  if (!items.length) { alert('Run a search first to generate a briefing.'); return; }
+
+  var lines = [];
+  lines.push('THE SEAM — INTELLIGENCE BRIEFING');
+  lines.push('MeshForce · aricciviclabs.org/meshforce');
+  lines.push('Generated: ' + new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'}));
+  lines.push('Query: ' + query);
+  lines.push('');
+  lines.push('─────────────────────────────────────────');
+  lines.push('');
+
+  items.forEach(function(item, idx) {
+    var title   = (item.querySelector('.result-title')   || {}).textContent || '';
+    var source  = (item.querySelector('.result-source')  || {}).textContent || '';
+    var date    = (item.querySelector('.result-date')    || {}).textContent || '';
+    var tag     = (item.querySelector('.result-tag')     || {}).textContent || '';
+    var summary = (item.querySelector('.result-summary') || {}).textContent || '';
+    lines.push((idx + 1) + '. ' + title);
+    lines.push('   Source: ' + source + (date ? ' · ' + date : '') + (tag ? ' [' + tag + ']' : ''));
+    lines.push('');
+    // wrap summary at ~80 chars
+    var words = summary.split(' ');
+    var line = '   ';
+    words.forEach(function(w) {
+      if ((line + w).length > 83) { lines.push(line.trimEnd()); line = '   ' + w + ' '; }
+      else line += w + ' ';
+    });
+    if (line.trim()) lines.push(line.trimEnd());
+    lines.push('');
+  });
+
+  lines.push('─────────────────────────────────────────');
+  lines.push('');
+  lines.push('DISCLAIMER: AI-synthesized from industry literature.');
+  lines.push('Verify findings with primary sources before operational use.');
+  lines.push('Not professional, legal, or financial advice.');
+
+  var blob = new Blob([lines.join('\n')], {type: 'text/plain'});
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
+  a.href = url;
+  a.download = 'seam-briefing-' + query.replace(/[^a-z0-9]/gi, '-').toLowerCase().slice(0, 40) + '.txt';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function() { document.body.removeChild(a); URL.revokeObjectURL(url); }, 1000);
+}
+
+// On load: check for success redirect
+(function() {
+  try {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get(SEAM_SUCCESS_PARAM) === '1') {
+      unlockSeam();
+      history.replaceState(null, '', window.location.pathname);
+    } else {
+      updateSeamUI();
+    }
+  } catch(e) { updateSeamUI(); }
+})();
+
+/* ── /Seam Paywall & Unlock ── */
+
 var PROXY_URL = 'https://myvalue.onrender.com/api/messages';
 var _DIRECT   = 'https://api.anthropic.com/v1/messages';
 
@@ -418,6 +612,12 @@ function runSeamSearch() {
   var query = document.getElementById('queryInput').value.trim();
   if (!query) return;
 
+  // Enforce turn limit
+  if (!isSeamUnlocked() && _seamSearchCount >= SEAM_FREE_LIMIT) {
+    openSeamPaywall();
+    return;
+  }
+
   var btn  = document.getElementById('searchBtn');
   var area = document.getElementById('resultsArea');
   btn.disabled = true;
@@ -435,7 +635,9 @@ function runSeamSearch() {
   .then(function(d1) {
     var txt1 = (d1.content || []).map(function(b){ return b.type === 'text' ? b.text : ''; }).join('');
     if (!txt1 || txt1.length < 10) throw new Error('empty response');
+    if (!isSeamUnlocked()) { _seamSearchCount++; updatePips(); }
     renderResults(area, parseResults(txt1));
+    document.getElementById('exportRow').style.display = 'flex';
     btn.disabled = false; btn.textContent = 'Search →';
   })
   .catch(function() {
@@ -446,7 +648,9 @@ function runSeamSearch() {
     .then(function(d2) {
       var txt2 = (d2.content || []).map(function(b){ return b.type === 'text' ? b.text : ''; }).join('');
       if (!txt2 || txt2.length < 10) throw new Error('empty response');
+      if (!isSeamUnlocked()) { _seamSearchCount++; updatePips(); }
       renderResults(area, parseResults(txt2));
+      document.getElementById('exportRow').style.display = 'flex';
     })
     .catch(function(e2) {
       area.innerHTML = '<div class="error-state">'
@@ -494,6 +698,42 @@ function sendCM(){
 }
 /* ── /Contact modal JS ── */
 </script>
+
+<!-- ── Seam Paywall Modal ── -->
+<div id="seam-paywall-overlay" role="dialog" aria-modal="true" aria-labelledby="pw-title">
+  <div id="seam-paywall-modal">
+    <div class="pw-icon">⚡</div>
+    <h3 class="pw-title" id="pw-title">Upgrade to Practitioner</h3>
+    <p class="pw-sub">You've used your 3 free searches. Practitioner access unlocks unlimited searches this session, plus PDF briefing exports.</p>
+    <div class="pw-plans">
+      <a href="https://buy.stripe.com/14AfZi9Meg1Y7PV5JV7N60w" class="pw-plan" onclick="handleSeamCheckout('monthly')">
+        <div>
+          <div class="pw-plan-label">MONTHLY</div>
+          <div class="pw-plan-name">Practitioner</div>
+          <div class="pw-plan-desc">Unlimited searches · PDF exports · Cancel anytime</div>
+        </div>
+        <div class="pw-plan-price">
+          <div class="pw-price-main">$29</div>
+          <span class="pw-price-period">/ month</span>
+        </div>
+      </a>
+      <a href="https://buy.stripe.com/14AdRa0bE5nk0nt4FR7N60x" class="pw-plan featured" onclick="handleSeamCheckout('annual')">
+        <div>
+          <div class="pw-plan-label">ANNUAL — BEST VALUE</div>
+          <div class="pw-plan-name">Practitioner</div>
+          <div class="pw-plan-desc">Unlimited searches · PDF exports · Priority features</div>
+        </div>
+        <div class="pw-plan-price">
+          <div class="pw-price-main">$325</div>
+          <span class="pw-price-period">/ year</span>
+          <span class="pw-price-savings">save $23/year</span>
+        </div>
+      </a>
+    </div>
+    <button class="pw-dismiss" onclick="closeSeamPaywall()">Maybe later — I'll use my free searches</button>
+  </div>
+</div>
+<!-- ── /Seam Paywall Modal ── -->
 
 <!-- ── Contact modal ── -->
 <div id="contact-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="cm-title">

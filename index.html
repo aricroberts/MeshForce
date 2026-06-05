@@ -206,6 +206,49 @@ function sendCM(){
   })
   .catch(function(){btn.disabled=false;btn.textContent='Send Message';status.style.color='#F0514F';status.textContent='Network error — email support@aricciviclabs.org directly.';});
 }
+function submitListing(){
+  var name=(document.getElementById('sl-name').value||'').trim();
+  var url=(document.getElementById('sl-url').value||'').trim();
+  var cat=(document.getElementById('sl-category').value||'').trim();
+  var email=(document.getElementById('sl-email').value||'').trim();
+  var pricing=(document.getElementById('sl-pricing').value||'');
+  var partnership=(document.getElementById('sl-partnership').value||'');
+  var desc=(document.getElementById('sl-description').value||'').trim();
+  var status=document.getElementById('sl-status');
+  if(!name||!url||!cat||!email){status.style.color='#F0514F';status.textContent='Please fill in required fields (name, URL, category, email).';return;}
+  var btn=document.querySelector('.form-submit');
+  btn.disabled=true;btn.textContent='Submitting…';status.textContent='';
+  fetch('https://formspree.io/f/mbdbkznw',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({
+      _subject:'MeshForce Listing Submission: '+name,
+      product_name:name,
+      website:url,
+      category:cat,
+      pricing_model:pricing,
+      partnership_interest:partnership,
+      description:desc,
+      contact_email:email,
+      _replyto:email
+    })
+  })
+  .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d};});})
+  .then(function(res){
+    btn.disabled=false;btn.textContent='Submit for Review';
+    if(res.ok){
+      status.style.color='#2ECC8A';
+      status.textContent=partnership&&partnership.indexOf('No')===-1
+        ?"Received! We'll be in touch about partnership opportunities within 5 business days."
+        :"Received! Your listing will be reviewed within 5 business days.";
+      document.getElementById('sl-name').value='';document.getElementById('sl-url').value='';
+      document.getElementById('sl-category').value='';document.getElementById('sl-pricing').value='';
+      document.getElementById('sl-partnership').value='';document.getElementById('sl-description').value='';
+      document.getElementById('sl-email').value='';
+    }else{status.style.color='#F0514F';status.textContent='Something went wrong — email hello@aricciviclabs.org directly.';}
+  })
+  .catch(function(){btn.disabled=false;btn.textContent='Submit for Review';status.style.color='#F0514F';status.textContent='Network error — email hello@aricciviclabs.org directly.';});
+}
 /* ── /Contact modal JS ── */
 </script>
 <!-- ── /Privacy notice bar ── -->
@@ -291,21 +334,25 @@ function sendCM(){
           <span class="tier-name">Free Access</span>
           <span class="tier-price">$0 / mo</span>
         </div>
-        <div class="tier-desc">Weekly digest of top WFM/AI developments. Access to full tools library and platform directory. Community discussion threads.</div>
+        <div class="tier-desc">3 searches per session. Access to full tools library and platform directory.</div>
       </div>
       <div class="tier highlighted">
         <div class="tier-header">
           <span class="tier-name">Practitioner</span>
           <span class="tier-price">$29 / mo</span>
         </div>
-        <div class="tier-desc">Daily Seam intelligence briefings. Custom topic filters (contact center, back-office, AI agents). Research paper summaries. Priority vendor submission review.</div>
+        <div class="tier-desc">Unlimited Seam searches · PDF briefing exports · Custom topic queries. Also available annually at $325/yr (save $23).</div>
+        <div style="display:flex;gap:0.75rem;margin-top:1rem;flex-wrap:wrap">
+          <a href="https://buy.stripe.com/14AfZi9Meg1Y7PV5JV7N60w" style="background:var(--amber);color:var(--navy);padding:0.5rem 1.25rem;border-radius:4px;font-weight:600;font-size:0.8125rem;text-decoration:none;transition:background 0.2s" onmouseover="this.style.background='#c47f00'" onmouseout="this.style.background='#f4a500'">Monthly →</a>
+          <a href="https://buy.stripe.com/14AdRa0bE5nk0nt4FR7N60x" style="border:1px solid rgba(244,165,0,0.5);color:var(--amber);padding:0.5rem 1.25rem;border-radius:4px;font-weight:500;font-size:0.8125rem;text-decoration:none;transition:all 0.2s" onmouseover="this.style.background='rgba(244,165,0,0.08)'" onmouseout="this.style.background='transparent'">Annual — save $23 →</a>
+        </div>
       </div>
       <div class="tier">
         <div class="tier-header">
-          <span class="tier-name">Enterprise</span>
-          <span class="tier-price">$149 / mo</span>
+          <span class="tier-name">Enterprise / Sponsored</span>
+          <span class="tier-price">Contact us</span>
         </div>
-        <div class="tier-desc">Team access (up to 25 seats). Private Seam queries. Custom industry crawling topics. Quarterly briefing calls. White-labeled exports for internal distribution.</div>
+        <div class="tier-desc">Team access · Sponsored directory placement · Partner badge · Priority in Seam results. <a href="#submit-listing" style="color:var(--amber)">Inquire below →</a></div>
       </div>
     </div>
   </div>
@@ -334,19 +381,19 @@ function sendCM(){
 
 <section class="submit-section" id="submit-listing">
   <h2>Submit a Listing</h2>
-  <p class="sub">Vendors and platform teams: submit your product for review. Free listings for open-source and free tools; sponsored placements available for commercial products.</p>
+  <p class="sub">Free listings for open-source and free tools. Sponsored placements and partnership inquiries are reviewed by the MeshForce team — we'll follow up directly.</p>
   <div class="form-wrap">
     <div class="form-row">
       <label>Company / Product Name *</label>
-      <input type="text" placeholder="e.g. Acme WFM Suite">
+      <input type="text" id="sl-name" placeholder="e.g. Acme WFM Suite">
     </div>
     <div class="form-row">
       <label>Website URL *</label>
-      <input type="url" placeholder="https://yourproduct.com">
+      <input type="url" id="sl-url" placeholder="https://yourproduct.com">
     </div>
     <div class="form-row">
       <label>Primary Category *</label>
-      <select>
+      <select id="sl-category">
         <option value="">Select a category…</option>
         <option>WFM Platform</option>
         <option>Enterprise Capacity Planning</option>
@@ -362,7 +409,7 @@ function sendCM(){
     </div>
     <div class="form-row">
       <label>Pricing Model</label>
-      <select>
+      <select id="sl-pricing">
         <option value="">Select…</option>
         <option>Free</option>
         <option>Freemium</option>
@@ -372,15 +419,26 @@ function sendCM(){
       </select>
     </div>
     <div class="form-row">
+      <label>Interested in sponsored placement or directory partnership?</label>
+      <select id="sl-partnership">
+        <option value="">Select…</option>
+        <option>Yes — interested in sponsored placement</option>
+        <option>Yes — interested in affiliate / referral partnership</option>
+        <option>Yes — interested in both</option>
+        <option>No — standard free listing only</option>
+      </select>
+    </div>
+    <div class="form-row">
       <label>Brief Description (2–3 sentences)</label>
-      <textarea placeholder="What does your product do, and who is it for?"></textarea>
+      <textarea id="sl-description" placeholder="What does your product do, and who is it for?"></textarea>
     </div>
     <div class="form-row">
       <label>Contact Email *</label>
-      <input type="email" placeholder="you@company.com">
+      <input type="email" id="sl-email" placeholder="you@company.com">
     </div>
-    <button class="form-submit" onclick="alert('Thank you! Your submission will be reviewed within 5 business days.')">Submit for Review</button>
-    <p class="form-note">Submissions are reviewed by the MeshForce editorial team. Sponsored placements are clearly labeled. Questions? <a href="mailto:support@aricciviclabs.org" style="color:var(--amber)">support@aricciviclabs.org</a></p>
+    <button class="form-submit" onclick="submitListing()">Submit for Review</button>
+    <div id="sl-status" style="margin-top:0.75rem;font-size:0.8125rem;text-align:center;min-height:1.2em"></div>
+    <p class="form-note">Submissions reviewed within 5 business days. Sponsored placements are clearly labeled. Questions? <a href="mailto:hello@aricciviclabs.org" style="color:var(--amber)">hello@aricciviclabs.org</a></p>
   </div>
 </section>
 
