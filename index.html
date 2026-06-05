@@ -202,9 +202,9 @@ function sendCM(){
     btn.disabled=false;btn.textContent='Send Message';
     if(res.ok){status.style.color='#2ECC8A';status.textContent="Sent! We'll be in touch soon.";
       setTimeout(function(){closeCM();document.getElementById('cm-name').value='';document.getElementById('cm-email').value='';document.getElementById('cm-message').value='';status.textContent='';},2000);
-    }else{status.style.color='#F0514F';status.textContent='Something went wrong — email aricroberts@gmail.com directly.';}
+    }else{status.style.color='#F0514F';status.textContent='Something went wrong — email support@aricciviclabs.org directly.';}
   })
-  .catch(function(){btn.disabled=false;btn.textContent='Send Message';status.style.color='#F0514F';status.textContent='Network error — email aricroberts@gmail.com directly.';});
+  .catch(function(){btn.disabled=false;btn.textContent='Send Message';status.style.color='#F0514F';status.textContent='Network error — email support@aricciviclabs.org directly.';});
 }
 /* ── /Contact modal JS ── */
 </script>
@@ -212,10 +212,10 @@ function sendCM(){
 
 <nav>
   <div class="nav-inner">
-    <a href="meshforce-index.html" class="nav-brand">
+    <div class="nav-brand">
       <span class="nav-brand-mark"><svg xmlns="http://www.w3.org/2000/svg" width="196" height="38" viewBox="0 0 196 38" role="img" aria-label="MeshForce"><g transform="translate(0,1)"><line x1="0" y1="0" x2="0" y2="34" stroke="#F4A500" stroke-width="1.2"/><line x1="12" y1="0" x2="12" y2="34" stroke="#F4A500" stroke-width="1.2"/><line x1="24" y1="0" x2="24" y2="34" stroke="#9B8BF8" stroke-width="1.2"/><line x1="36" y1="0" x2="36" y2="34" stroke="#22D4C8" stroke-width="1.2"/><line x1="0" y1="0" x2="36" y2="0" stroke="#F4A500" stroke-width="1.2"/><line x1="0" y1="12" x2="36" y2="12" stroke="#F4A500" stroke-width="1.2"/><line x1="0" y1="23" x2="36" y2="23" stroke="#9B8BF8" stroke-width="1.2"/><line x1="0" y1="34" x2="36" y2="34" stroke="#22D4C8" stroke-width="1.2"/><circle cx="0" cy="0" r="2.5" fill="#F4A500"/><circle cx="12" cy="0" r="2.5" fill="#F4A500"/><circle cx="24" cy="0" r="2" fill="#C8B4FA"/><circle cx="36" cy="0" r="2" fill="#22D4C8"/><circle cx="0" cy="12" r="2.5" fill="#F4A500"/><circle cx="12" cy="12" r="2.5" fill="#F4A500"/><circle cx="24" cy="12" r="2" fill="#C8B4FA"/><circle cx="36" cy="12" r="2" fill="#22D4C8"/><circle cx="0" cy="23" r="2" fill="#C8B4FA"/><circle cx="12" cy="23" r="2" fill="#C8B4FA"/><circle cx="24" cy="23" r="3.5" fill="#ffffff" opacity="0.92"/><circle cx="36" cy="23" r="2" fill="#22D4C8"/><circle cx="0" cy="34" r="2" fill="#22D4C8"/><circle cx="12" cy="34" r="2" fill="#22D4C8"/><circle cx="24" cy="34" r="2" fill="#22D4C8"/><circle cx="36" cy="34" r="2" fill="#22D4C8"/></g><text x="46" y="27" font-family="'DM Serif Display',Georgia,serif" font-style="italic" font-size="25" fill="#e8e6e1">MeshForce</text></svg></span>
       <span class="nav-brand-lab">by Aric Civic Labs</span>
-    </a>
+    </div>
     <ul class="nav-links">
       <li><a href="meshforce-index.html" class="active">Home</a></li>
       <li><a href="tools.html">Tools</a></li>
@@ -380,7 +380,7 @@ function sendCM(){
       <input type="email" placeholder="you@company.com">
     </div>
     <button class="form-submit" onclick="alert('Thank you! Your submission will be reviewed within 5 business days.')">Submit for Review</button>
-    <p class="form-note">Submissions are reviewed by the MeshForce editorial team. Sponsored placements are clearly labeled. Questions? <a href="mailto:aricroberts@gmail.com" style="color:var(--amber)">aricroberts@gmail.com</a></p>
+    <p class="form-note">Submissions are reviewed by the MeshForce editorial team. Sponsored placements are clearly labeled. Questions? <a href="mailto:support@aricciviclabs.org" style="color:var(--amber)">support@aricciviclabs.org</a></p>
   </div>
 </section>
 
