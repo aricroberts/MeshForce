@@ -84,6 +84,15 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
 @keyframes pulse{0%,80%,100%{transform:scale(0.6);opacity:0.5}40%{transform:scale(1);opacity:1}}
 .error-state{color:#f87171;font-size:0.875rem;padding:1.1rem;background:rgba(248,113,113,0.08);border-radius:6px;border:1px solid rgba(248,113,113,0.2)}
 
+/* SOURCES SECTION */
+.sources-section{margin-top:1.75rem;padding-top:1.25rem;border-top:1px solid var(--card-border)}
+.sources-label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--slate);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.65rem}
+.sources-list{display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.75rem}
+.source-chip{background:rgba(17,34,64,0.8);border:1px solid rgba(244,165,0,0.25);color:var(--amber);padding:0.3rem 0.85rem;border-radius:20px;font-size:0.8rem;font-family:'DM Sans',sans-serif;text-decoration:none;transition:all 0.2s}
+.source-chip:hover{background:rgba(244,165,0,0.1);border-color:rgba(244,165,0,0.5)}
+.source-chip-plain{background:rgba(17,34,64,0.5);border:1px solid var(--card-border);color:var(--slate-light);cursor:default}
+.sources-note{font-size:0.72rem;color:var(--slate);line-height:1.55;font-style:italic}
+
 /* SEAM DISCLAIMER */
 .seam-note{font-size:0.75rem;color:var(--slate);margin-top:1.1rem;line-height:1.55;font-style:italic}
 
@@ -219,7 +228,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
       <div class="results-area" id="resultsArea">
         <p class="results-placeholder">Select a topic above or enter your own query.<br><strong>The Seam will search current industry literature and synthesize key findings for WFM and ECP practitioners.</strong></p>
       </div>
-      <p class="seam-note">The Seam uses AI with web search to surface current research and industry developments. Results are synthesized for practitioner relevance. Always verify critical findings with primary sources before applying to operational decisions.</p>
+      <p class="seam-note">The Seam uses AI with web search to surface current industry developments. Results are synthesized for practitioner relevance. Sources are linked by publisher — not by specific article.</p>
     </div>
   </div>
 </section>
@@ -362,13 +371,12 @@ function renderResults(area, results) {
   var sorted = results.slice().sort(function(a, b) {
     return parseDateScore(b.date) - parseDateScore(a.date);
   });
-  area.innerHTML = sorted.map(function(r) {
-    var sourceHtml = r.url
-      ? '<a href="' + escHtml(r.url) + '" target="_blank" rel="noopener" class="result-source result-source-link">' + escHtml(r.source || 'Source') + ' ↗</a>'
-      : '<span class="result-source">' + escHtml(r.source || 'Source') + '</span>';
+
+  // Result cards — source is plain text only, no article links
+  var cardsHtml = sorted.map(function(r) {
     return '<div class="result-item">'
       + '<div class="result-meta">'
-      + sourceHtml
+      + '<span class="result-source">' + escHtml(r.source || 'Source') + '</span>'
       + '<span class="result-date">'   + escHtml(r.date   || '')       + '</span>'
       + '<span class="result-tag">'    + escHtml(r.tag    || 'Research') + '</span>'
       + '</div>'
@@ -376,7 +384,35 @@ function renderResults(area, results) {
       + '<div class="result-summary">' + escHtml(r.summary || '') + '</div>'
       + '</div>';
   }).join('');
+
+  // Sources section — deduplicated, links to domain homepage only
+  var seen = {};
+  var sourceItems = [];
+  sorted.forEach(function(r) {
+    var key = (r.source || '').toLowerCase();
+    if (!key || seen[key]) return;
+    seen[key] = true;
+    sourceItems.push(r);
+  });
+
+  var sourcesHtml = '<div class="sources-section">'
+    + '<div class="sources-label">Sources</div>'
+    + '<div class="sources-list">'
+    + sourceItems.map(function(r) {
+        if (r.domain) {
+          return '<a href="' + escHtml(r.domain) + '" target="_blank" rel="noopener" class="source-chip">'
+            + escHtml(r.source || r.domain) + ' ↗</a>';
+        }
+        return '<span class="source-chip source-chip-plain">' + escHtml(r.source || '') + '</span>';
+      }).join('')
+    + '</div>'
+    + '<p class="sources-note">Sources link to publisher homepages. Summaries are AI-synthesized — always verify findings with primary sources before applying to operational decisions.</p>'
+    + '</div>';
+
+  area.innerHTML = cardsHtml + sourcesHtml;
 }
+
+
 
 function runSeamSearch() {
   var query = document.getElementById('queryInput').value.trim();
@@ -388,13 +424,13 @@ function runSeamSearch() {
   btn.textContent = 'Searching…';
   area.innerHTML = '<div class="loading-state"><div style="margin-bottom:1rem;font-size:0.875rem">The Seam is searching industry literature…</div><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
 
-  var SYS = 'You are The Seam, an AI intelligence engine for workforce management (WFM) and enterprise capacity planning (ECP) professionals. Synthesize authoritative, current information on workforce management topics.\n\nReturn ONLY a JSON array (no markdown, no preamble, no backticks) with this exact structure:\n[\n  {\n    "source": "SOURCE NAME",\n    "date": "Month Year or Year",\n    "tag": "CATEGORY",\n    "title": "Descriptive Title of Finding",\n    "summary": "2-3 sentence practical summary for WFM/ECP practitioners with specific data or recommendations where available.",\n    "url": "https://actual-source-url.com/page"\n  }\n]\n\nCRITICAL: Return EXACTLY 3 items — no more. Keep each summary under 60 words. This prevents JSON truncation.\n\nCRITICAL URL RULES: Every result MUST include a real working URL from your web search results. Use the exact URL the search tool returned. Do NOT invent, guess, or leave URLs empty. If you cannot find a real URL for a finding, omit that finding entirely. Never return an empty string or placeholder for url.\n\nCategories: Research, Industry Trend, Best Practice, Tool Update, Vendor News, Case Study, Framework, Academic.';
+  var SYS = 'You are The Seam, an AI intelligence engine for workforce management (WFM) and enterprise capacity planning (ECP) professionals. Synthesize authoritative, current information on workforce management topics.\n\nReturn ONLY a JSON array (no markdown, no preamble, no backticks) with this exact structure:\n[\n  {\n    "source": "SOURCE NAME",\n    "domain": "https://www.sourcehomepage.com",\n    "date": "Month Year or Year",\n    "tag": "CATEGORY",\n    "title": "Descriptive Title of Finding",\n    "summary": "2-3 sentence practical summary for WFM/ECP practitioners with specific data or recommendations where available."\n  }\n]\n\nCRITICAL: Return EXACTLY 3 items — no more. Keep each summary under 60 words. This prevents JSON truncation.\n\nDOMAIN RULES: The "domain" field must be the homepage or known section URL of the publisher (e.g. "https://www.mckinsey.com/featured-insights/future-of-work", "https://hbr.org", "https://www.shrm.org"). Do NOT invent article URLs. Do NOT include specific article paths. Only include a domain you are certain exists. If unsure, omit the domain field entirely.\n\nCategories: Research, Industry Trend, Best Practice, Tool Update, Vendor News, Case Study, Framework, Academic.';
 
   var basePayload = { model: 'claude-sonnet-4-20250514', max_tokens: 1500, system: SYS };
 
   // Pass 1 — with web search
   apiCall(Object.assign({}, basePayload, {
-    messages: [{ role: 'user', content: 'Synthesize 3-5 current findings on this WFM/ECP topic. Search the web for real sources and include the actual URL for EVERY result — no empty URLs. Topic: ' + query }]
+    messages: [{ role: 'user', content: 'Synthesize 3 current findings on this WFM/ECP topic. For each result include the publisher domain homepage (not a specific article URL). Topic: ' + query }]
   }), true)
   .then(function(d1) {
     var txt1 = (d1.content || []).map(function(b){ return b.type === 'text' ? b.text : ''; }).join('');
