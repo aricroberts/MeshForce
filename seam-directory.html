@@ -146,6 +146,25 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
 #cm-close{position:absolute;top:.75rem;right:.9rem;background:none;border:none;color:#8892b0;font-size:1.25rem;cursor:pointer;line-height:1}
 #cm-close:hover{color:#e8e6e1}
 /* ── /Contact modal ── */
+
+/* ── Click tracking / popularity badges ── */
+.popular-bar{position:relative;z-index:1;max-width:1200px;margin:0 auto 0;padding:0 2rem 1.5rem}
+.popular-bar-inner{background:rgba(244,165,0,0.06);border:1px solid rgba(244,165,0,0.18);border-radius:8px;padding:1rem 1.5rem}
+.popular-bar-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.85rem;flex-wrap:wrap}
+.popular-bar-title{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber)}
+.popular-bar-sub{font-size:0.78rem;color:var(--slate)}
+.popular-list{display:flex;flex-wrap:wrap;gap:0.5rem}
+.popular-chip{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(17,34,64,0.9);border:1px solid rgba(244,165,0,0.22);border-radius:5px;padding:0.3rem 0.75rem;font-size:0.78rem;color:var(--white);text-decoration:none;transition:border-color 0.2s;cursor:pointer}
+.popular-chip:hover{border-color:rgba(244,165,0,0.55);color:var(--amber)}
+.popular-chip-rank{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--slate);min-width:1.1em}
+.popular-chip-name{font-weight:500}
+.popular-chip-count{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--amber);opacity:0.75}
+.popular-badge{display:inline-block;font-size:0.6rem;font-family:'JetBrains Mono',monospace;background:rgba(244,165,0,0.15);border:1px solid rgba(244,165,0,0.35);color:var(--amber);border-radius:3px;padding:0.15rem 0.4rem;margin-left:0.4rem;letter-spacing:0.04em;vertical-align:middle}
+.popular-badge.top1{background:rgba(244,165,0,0.25);border-color:rgba(244,165,0,0.6)}
+.sort-popular-btn{background:transparent;border:1px solid rgba(244,165,0,0.35);color:var(--amber);padding:0.3rem 0.85rem;border-radius:20px;font-size:0.78rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.sort-popular-btn:hover,.sort-popular-btn.active{background:rgba(244,165,0,0.12);border-color:var(--amber)}
+.popular-loading{font-size:0.78rem;color:var(--slate);font-family:'JetBrains Mono',monospace}
+/* ── /Click tracking ── */
 </style>
 </head>
 <body>
@@ -187,14 +206,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
   <p>200+ curated listings across contact center and field workforce platforms — AI agents, WFM tools, field service management, capacity planning, research, associations, and training. Two workforce worlds, one directory.</p>
 </div>
 
-<!-- Submit a Listing — jump link at top -->
-<div class="submit-jump-banner">
-  <div class="submit-jump-inner">
-    <span class="submit-jump-text"><strong>Vendor or platform team?</strong> Submit your product for inclusion in the directory.</span>
-    <a href="#submit-listing" class="submit-jump-link">Submit a Listing ↓</a>
-  </div>
-</div>
-
 <!-- Section navigation -->
 <div class="section-nav">
   <span class="section-nav-label">Contact Center:</span>
@@ -213,9 +224,25 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
   <a href="#fm-research" class="sec-pill" style="border-color:rgba(34,212,200,0.3);color:#22D4C8">Research</a>
   <a href="#fm-associations" class="sec-pill" style="border-color:rgba(34,212,200,0.3);color:#22D4C8">Associations</a>
   <a href="#fm-training" class="sec-pill" style="border-color:rgba(34,212,200,0.3);color:#22D4C8">Training</a>
-  <a href="#submit-listing" class="sec-pill submit-pill">Submit a Listing ↓</a>
+  <button class="sort-popular-btn" id="sortPopularBtn" onclick="togglePopularSort()">🔥 Most Popular</button>
 </div>
 
+
+<!-- ── Most Popular Bar ── -->
+<div class="popular-bar" id="popularBar" style="display:none">
+  <div class="popular-bar-inner">
+    <div class="popular-bar-head">
+      <div>
+        <div class="popular-bar-title">🔥 Most Visited Listings</div>
+        <div class="popular-bar-sub">Ranked by real click-through traffic from this directory</div>
+      </div>
+    </div>
+    <div class="popular-list" id="popularList">
+      <span class="popular-loading">Loading…</span>
+    </div>
+  </div>
+</div>
+<!-- ── /Most Popular Bar ── -->
 
 <!-- ══════════════════════════════════════════════════════
      CONTACT CENTER WORKFORCE MANAGEMENT
@@ -673,6 +700,14 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
 </section>
 
 <hr class="section-divider field">
+
+<!-- Submit a Listing — jump link at top -->
+<div class="submit-jump-banner">
+  <div class="submit-jump-inner">
+    <span class="submit-jump-text"><strong>Vendor or platform team?</strong> Submit your product for inclusion in the directory.</span>
+    <a href="#submit-listing" class="submit-jump-link">Submit a Listing ↓</a>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════════════════════
      FIELD MANAGEMENT WORKFORCE PLANNING
@@ -1190,6 +1225,170 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
 </footer>
 
 <script>
+/* ── Click tracking & Most Popular ── */
+var SUPA_URL = 'https://epntzskzmdlfqyosscbc.supabase.co';
+var SUPA_ANON = 'sb_publishable_i5pUA7v3H5UOPifMLTcLtA_zJO12EnK';
+var PAGE_ID = 'directory';
+var _popularData = [];
+var _sortByPopular = false;
+var _originalOrder = [];
+
+function slugify(str) {
+  return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function trackClick(name, url) {
+  var key = slugify(name);
+  try {
+    fetch(SUPA_URL + '/rest/v1/rpc/increment_click', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPA_ANON,
+        'Authorization': 'Bearer ' + SUPA_ANON
+      },
+      body: JSON.stringify({ p_key: key, p_name: name, p_url: url, p_page: PAGE_ID })
+    })
+    .then(function(r) { console.log('[MF click]', name, r.status); })
+    .catch(function(e) { console.warn('[MF click error]', e); });
+  } catch(e) {}
+}
+
+function instrumentLinks() {
+  var links = document.querySelectorAll('a.dir-card-link[href^="http"]');
+  for (var i = 0; i < links.length; i++) {
+    (function(link) {
+      var name = '';
+      var card = link.closest('.dir-card');
+      if (card) {
+        var nameEl = card.querySelector('.dir-card-name');
+        if (nameEl) name = nameEl.textContent.trim();
+      }
+      if (!name) name = link.textContent.replace('↗','').trim();
+      link.addEventListener('click', function() {
+        trackClick(name, link.href);
+      });
+    })(links[i]);
+  }
+}
+
+function loadPopularData() {
+  try {
+    fetch(SUPA_URL + '/rest/v1/directory_clicks?page=eq.' + PAGE_ID + '&order=click_count.desc&limit=20', {
+      headers: {
+        'apikey': SUPA_ANON,
+        'Authorization': 'Bearer ' + SUPA_ANON
+      }
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!data || !data.length) { return; }
+      _popularData = data;
+      renderPopularBar(data);
+      document.getElementById('popularBar').style.display = '';
+    })
+    .catch(function(){});
+  } catch(e) {}
+}
+
+function renderPopularBar(data) {
+  var list = document.getElementById('popularList');
+  if (!list) return;
+  var top = data.slice(0, 10);
+  if (!top.length) { list.innerHTML = '<span class="popular-loading">No clicks recorded yet.</span>'; return; }
+  var html = '';
+  for (var i = 0; i < top.length; i++) {
+    var item = top[i];
+    var medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i + 1) + '.';
+    html += '<a class="popular-chip" href="' + item.listing_url + '" target="_blank" rel="noopener" onclick="trackClick(\'' + item.listing_name.replace(/'/g, "\\'") + '\',\'' + item.listing_url + '\')">'
+      + '<span class="popular-chip-rank">' + medal + '</span>'
+      + '<span class="popular-chip-name">' + item.listing_name + '</span>'
+      + '<span class="popular-chip-count">' + item.click_count + ' clicks</span>'
+      + '</a>';
+  }
+  list.innerHTML = html;
+
+  // Overlay badges on the actual cards
+  var cards = document.querySelectorAll('.dir-card');
+  // Build lookup: slug → rank
+  var rankMap = {};
+  for (var j = 0; j < top.length; j++) {
+    rankMap[top[j].listing_key] = { rank: j + 1, count: top[j].click_count };
+  }
+  for (var k = 0; k < cards.length; k++) {
+    var nameEl = cards[k].querySelector('.dir-card-name');
+    if (!nameEl) continue;
+    var slug = slugify(nameEl.textContent.trim());
+    if (rankMap[slug]) {
+      var info = rankMap[slug];
+      var label = info.rank === 1 ? '🔥 #1 Most Visited' : info.rank <= 3 ? '🔥 Top 3' : '🔥 Popular';
+      var badge = document.createElement('span');
+      badge.className = 'popular-badge' + (info.rank === 1 ? ' top1' : '');
+      badge.textContent = label;
+      var top2 = cards[k].querySelector('.dir-card-top');
+      if (top2) top2.appendChild(badge);
+    }
+  }
+}
+
+function togglePopularSort() {
+  _sortByPopular = !_sortByPopular;
+  var btn = document.getElementById('sortPopularBtn');
+  if (btn) btn.classList.toggle('active', _sortByPopular);
+
+  if (!_sortByPopular) {
+    // Restore original DOM order
+    for (var i = 0; i < _originalOrder.length; i++) {
+      var item = _originalOrder[i];
+      if (item.grid && item.card) item.grid.appendChild(item.card);
+    }
+    return;
+  }
+
+  if (!_popularData.length) { alert('No popularity data yet — visit some listings first!'); _sortByPopular = false; return; }
+
+  // Save original order on first sort
+  if (!_originalOrder.length) {
+    var grids = document.querySelectorAll('.dir-grid');
+    for (var g = 0; g < grids.length; g++) {
+      var cards = grids[g].querySelectorAll('.dir-card');
+      for (var c = 0; c < cards.length; c++) {
+        _originalOrder.push({ grid: grids[g], card: cards[c] });
+      }
+    }
+  }
+
+  // Build rank map
+  var rankMap2 = {};
+  for (var r = 0; r < _popularData.length; r++) {
+    rankMap2[_popularData[r].listing_key] = _popularData[r].click_count;
+  }
+
+  // Sort each grid independently
+  var grids2 = document.querySelectorAll('.dir-grid');
+  for (var g2 = 0; g2 < grids2.length; g2++) {
+    var grid = grids2[g2];
+    var cardArr = Array.prototype.slice.call(grid.querySelectorAll('.dir-card'));
+    cardArr.sort(function(a, b) {
+      var nameA = a.querySelector('.dir-card-name');
+      var nameB = b.querySelector('.dir-card-name');
+      var slugA = nameA ? slugify(nameA.textContent.trim()) : '';
+      var slugB = nameB ? slugify(nameB.textContent.trim()) : '';
+      var countA = rankMap2[slugA] || 0;
+      var countB = rankMap2[slugB] || 0;
+      return countB - countA;
+    });
+    for (var ci = 0; ci < cardArr.length; ci++) {
+      grid.appendChild(cardArr[ci]);
+    }
+  }
+}
+
+// Init — call directly since script is at bottom of page after all DOM exists
+instrumentLinks();
+loadPopularData();
+/* ── /Click tracking ── */
+
 function submitListing() {
   var name  = (document.getElementById('sub-name').value  || '').trim();
   var url   = (document.getElementById('sub-url').value   || '').trim();
