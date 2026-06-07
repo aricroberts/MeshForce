@@ -50,8 +50,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,0.95);backdrop-fi
 .nav-links{display:flex;gap:2rem;list-style:none}
 .nav-links a{color:var(--slate-light);text-decoration:none;font-size:0.875rem;font-weight:500;transition:color 0.2s}
 .nav-links a:hover,.nav-links a.active{color:var(--amber)}
-.nav-seam{background:var(--amber);color:var(--navy)!important;padding:0.35rem 1rem;border-radius:4px;font-weight:600!important}
-.nav-seam:hover{background:var(--amber-dim)!important;color:var(--navy)!important}
+
 .nav-ecosystem{display:flex;gap:0.5rem;align-items:center}
 .nav-eco-link{color:var(--slate-light);text-decoration:none;font-size:0.8rem;font-weight:500;padding:0.3rem 0.7rem;border:1px solid var(--card-border);border-radius:4px;transition:all 0.2s;white-space:nowrap}
 .nav-eco-link:hover{color:var(--amber);border-color:rgba(244,165,0,0.4)}
@@ -277,7 +276,7 @@ function submitListing(){
       <li><a href="https://meshforce.aricciviclabs.org/" class="active">Home</a></li>
       <li><a href="tools.html">Tools</a></li>
       <li><a href="https://theseam.aricciviclabs.org/seam-directory.html">Directory</a></li>
-      <li><a href="https://theseam.aricciviclabs.org/seam-index.html" class="nav-seam">The Seam →</a></li>
+      <li><a href="https://theseam.aricciviclabs.org/">The Seam</a></li>
     </ul>
     <div class="nav-ecosystem">
       <a href="https://receipts.aricciviclabs.org/" class="nav-eco-link">receipts.</a>
@@ -327,8 +326,9 @@ function submitListing(){
       <span class="card-tag">120+ resources →</span>
     </a>
 
-      <div class="seam-card-mark"><svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 72 72" role="img" aria-label="The Seam icon"><rect width="72" height="72" rx="15" fill="#0a1628"/><polygon points="8,8 64,8 56,24 16,24" fill="#F4A500" opacity="0.92"/><polygon points="14,28 58,28 48,44 24,44" fill="#9B8BF8" opacity="0.92"/><polygon points="20,48 52,48 36,64" fill="#22D4C8" opacity="0.92"/></svg><span style="font-family:'DM Serif Display',serif;font-size:1.1rem;font-style:italic;color:#6ee7b7;margin-left:4px">The Seam</span></div>
-      <h3 style="margin-top:0"></h3>
+    <a href="https://theseam.aricciviclabs.org/" class="card">
+      <div class="card-icon">🧵</div>
+      <h3>The Seam Intelligence Engine</h3>
       <p>A live intelligence engine that crawls industry literature, research papers, vendor announcements, and best practices — surfacing what matters, when it matters.</p>
       <span class="card-tag">Powered by AI · Live crawling →</span>
     </a>
@@ -343,7 +343,7 @@ function submitListing(){
       <p>From Erlang modeling advances to AI agent deployment case studies, The Seam keeps you ahead of the curve without the noise.</p>
       <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
         <a href="https://theseam.aricciviclabs.org/seam.html" class="btn-primary">Open the Intelligence Engine →</a>
-        <a href="https://theseam.aricciviclabs.org/seam-index.html" class="btn-ghost">Learn more about The Seam</a>
+        <a href="https://theseam.aricciviclabs.org/" class="btn-ghost">Learn more about The Seam</a>
       </div>
     </div>
     <div class="seam-tiers">
@@ -537,12 +537,12 @@ function submitListing(){
           <img src="meshforce_icon.png" alt="MeshForce" style="height:32px;width:32px;border-radius:6px"/>
           <a href="https://meshforce.aricciviclabs.org/" style="font-family:'DM Serif Display',serif;font-size:1rem;font-style:italic;color:var(--white);text-decoration:none">MeshForce</a>
           <span style="color:var(--slate);font-size:0.8rem;opacity:.5">+</span>
-          <a href="https://theseam.aricciviclabs.org/seam-index.html" style="font-family:'DM Serif Display',serif;font-size:1rem;font-style:italic;color:var(--amber);text-decoration:none">The Seam</a>
+          <a href="https://theseam.aricciviclabs.org/" style="font-family:'DM Serif Display',serif;font-size:1rem;font-style:italic;color:var(--amber);text-decoration:none">The Seam</a>
         </div>
         <p style="font-size:13px;font-weight:300;color:var(--slate-light);line-height:1.6">The definitive resource registry for WFM professionals. 55+ tools, 120+ platform listings, and The Seam intelligence engine — each with their own home.</p>
         <div style="display:flex;gap:.5rem;margin-top:1rem;flex-wrap:wrap">
           <a href="https://meshforce.aricciviclabs.org/" style="font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--amber);text-decoration:none;padding:3px 10px;border:1px solid rgba(244,165,0,.3);border-radius:3px">MeshForce Home</a>
-          <a href="https://theseam.aricciviclabs.org/seam-index.html" style="font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#22D4C8;text-decoration:none;padding:3px 10px;border:1px solid rgba(34,212,200,.3);border-radius:3px">The Seam Home</a>
+          <a href="https://theseam.aricciviclabs.org/" style="font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#22D4C8;text-decoration:none;padding:3px 10px;border:1px solid rgba(34,212,200,.3);border-radius:3px">The Seam Home</a>
         </div>
       </div>
     </div>
@@ -566,7 +566,7 @@ function submitListing(){
     <div class="footer-links">
       <a href="tools.html">Tools</a>
       <a href="https://theseam.aricciviclabs.org/seam-directory.html">Directory</a>
-      <a href="https://theseam.aricciviclabs.org/seam-index.html">The Seam</a>
+      <a href="https://theseam.aricciviclabs.org/">The Seam</a>
       <a href="#submit-listing">Submit Listing</a>
       <a href="#" onclick="openCM();return false;">Contact</a>
     </div>
