@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Practical Tools — MeshForce | WFM & AI Workforce Registry</title>
-<meta name="description" content="55+ free and commercial workforce management tools: Erlang calculators, shrinkage calculators, FTE planners, AI agent builders, demand forecasting, scheduling helpers, and analytics dashboards.">
-<meta name="keywords" content="Erlang calculator, shrinkage calculator, FTE calculator, WFM tools, AI agent builder for workforce, demand forecasting tools, contact center staffing, workforce analytics">
+<title>Practical Tools — MeshForce | Contact Center & Field Workforce</title>
+<meta name="description" content="100+ free and commercial workforce management tools across contact center and field operations: Erlang calculators, FSM platforms, route optimization, shrinkage calculators, FTE planners, AI agent builders, demand forecasting, and analytics dashboards.">
+<meta name="keywords" content="Erlang calculator, shrinkage calculator, FTE calculator, WFM tools, field service management, FSM platform, route optimization, AI agent builder for workforce, demand forecasting tools, contact center staffing, workforce analytics">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://aricciviclabs.org/meshforce/tools">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,6 +75,16 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
 .footer-links a{color:var(--slate);text-decoration:none;font-size:0.8125rem;transition:color 0.2s}
 .footer-links a:hover{color:var(--white)}
 
+/* ── Sector divider banners ── */
+.sector-banner{position:relative;z-index:1;max-width:1200px;margin:2.5rem auto 0;padding:1rem 2rem;display:flex;align-items:center;gap:1rem;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.sector-banner.field{border-top-color:rgba(34,212,200,0.3);border-bottom-color:rgba(34,212,200,0.3)}
+.sector-icon{font-size:1.25rem}
+.sector-label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber)}
+.sector-banner.field .sector-label{color:#22D4C8}
+.sector-title{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--white)}
+.sector-desc{color:var(--slate);font-size:0.8125rem;margin-left:auto;max-width:380px;text-align:right;line-height:1.5}
+/* ── /Sector divider banners ── */
+
 /* ── Privacy notice bar ── */
 #rcp-notice{position:sticky;top:0;z-index:9999;background:#0d1c36;border-bottom:1px solid rgba(244,165,0,0.2);padding:.5rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--slate);line-height:1.4}
 #rcp-notice a{color:var(--amber);text-decoration:none}
@@ -131,21 +141,33 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   <input type="text" id="searchBox" placeholder="Search tools…" oninput="filterTools()">
   <button class="pill active" onclick="setTag('all',this)">All</button>
   <button class="pill" onclick="setTag('free-only',this)">Free Only</button>
-  <button class="pill" onclick="setTag('erlang',this)">Erlang</button>
+  <button class="pill" onclick="setTag('erlang',this)">Erlang / Staffing</button>
   <button class="pill" onclick="setTag('forecasting',this)">Forecasting</button>
   <button class="pill" onclick="setTag('ai-agent',this)">AI Agents</button>
   <button class="pill" onclick="setTag('scheduling',this)">Scheduling</button>
   <button class="pill" onclick="setTag('analytics',this)">Analytics</button>
-  <span class="count-label" id="countLabel">55 tools shown</span>
+  <button class="pill" onclick="setTag('field',this)" style="border-color:rgba(34,212,200,0.3);color:#22D4C8">Field</button>
+  <span class="count-label" id="countLabel">113 tools shown</span>
 </div>
 
-<!-- SECTION 1 -->
+
+<!-- ══ CONTACT CENTER ══ -->
+<div class="sector-banner">
+  <span class="sector-icon">📞</span>
+  <div>
+    <div class="sector-label">Contact Center</div>
+    <div class="sector-title">Contact Center Workforce Management</div>
+  </div>
+  <p class="sector-desc">Staffing calculators, WFM platforms, forecasting tools, AI agents, and scheduling helpers purpose-built for contact center operations.</p>
+</div>
+
+<!-- CC: Staffing & Erlang Calculators -->
 <section class="tools-section">
-  <div class="section-head"><h2>Staffing & Erlang Calculators</h2><span class="count">8 tools</span></div>
+  <div class="section-head"><h2>Staffing &amp; Erlang Calculators</h2><span class="count">8 tools</span></div>
   <div class="tools-grid">
     <div class="tool-card" data-tags="erlang free-only">
       <div class="tool-top"><span class="tool-name">WorkforceAnalyst Erlang</span><span class="badge badge-free">FREE</span></div>
-      <p class="tool-desc">Independent practitioner-built Erlang C & A calculator. Most comprehensive free tool available; handles AHT, SLA targets, and shrinkage in one workflow.</p>
+      <p class="tool-desc">Independent practitioner-built Erlang C &amp; A calculator. Most comprehensive free tool available; handles AHT, SLA targets, and shrinkage in one workflow.</p>
       <a href="https://www.workforceanalyst.com" target="_blank" rel="noopener" class="tool-link">workforceanalyst.com ↗</a>
       <span class="tool-rec">★ Top recommendation for free Erlang</span>
     </div>
@@ -187,9 +209,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   </div>
 </section>
 
-<!-- SECTION 2 -->
+<!-- CC: Shrinkage, FTE & Capacity -->
 <section class="tools-section">
-  <div class="section-head"><h2>Shrinkage, FTE & Capacity Calculators</h2><span class="count">6 tools</span></div>
+  <div class="section-head"><h2>Shrinkage, FTE &amp; Capacity Calculators</h2><span class="count">6 tools</span></div>
   <div class="tools-grid">
     <div class="tool-card" data-tags="free-only">
       <div class="tool-top"><span class="tool-name">WorkforceAnalyst Shrinkage</span><span class="badge badge-free">FREE</span></div>
@@ -209,7 +231,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
     </div>
     <div class="tool-card" data-tags="paid">
       <div class="tool-top"><span class="tool-name">Cube Software</span><span class="badge badge-paid">PAID</span></div>
-      <p class="tool-desc">FP&A platform with workforce capacity planning modules. Built for finance teams managing headcount and budget in tandem.</p>
+      <p class="tool-desc">FP&amp;A platform with workforce capacity planning modules. Built for finance teams managing headcount and budget in tandem.</p>
       <a href="https://www.cubesoftware.com" target="_blank" rel="noopener" class="tool-link">cubesoftware.com ↗</a>
     </div>
     <div class="tool-card" data-tags="paid">
@@ -225,9 +247,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   </div>
 </section>
 
-<!-- SECTION 3 -->
+<!-- CC: Demand Forecasting -->
 <section class="tools-section">
-  <div class="section-head"><h2>Demand Forecasting & Volume Modeling</h2><span class="count">5 tools</span></div>
+  <div class="section-head"><h2>Demand Forecasting &amp; Volume Modeling</h2><span class="count">5 tools</span></div>
   <div class="tools-grid">
     <div class="tool-card" data-tags="forecasting free-only">
       <div class="tool-top"><span class="tool-name">CCH Monthly Forecasting Excel</span><span class="badge badge-free">FREE</span></div>
@@ -263,7 +285,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   <a href="seam.html#intelligence" class="btn-amber">Open The Seam →</a>
 </div>
 
-<!-- SECTION 4 -->
+<!-- CC: Scheduling -->
 <section class="tools-section">
   <div class="section-head"><h2>Scheduling Helpers</h2><span class="count">6 tools</span></div>
   <div class="tools-grid">
@@ -300,7 +322,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   </div>
 </section>
 
-<!-- SECTION 5 -->
+<!-- CC: AI Agent Builders -->
 <section class="tools-section">
   <div class="section-head"><h2>AI Agent Builders for WFM</h2><span class="count">8 tools</span></div>
   <div class="tools-grid">
@@ -332,7 +354,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
     </div>
     <div class="tool-card" data-tags="ai-agent paid">
       <div class="tool-top"><span class="tool-name">Google Gemini Enterprise Agent Platform</span><span class="badge badge-paid">PAID</span></div>
-      <p class="tool-desc">Enterprise-grade agent development on Google Cloud (formerly Vertex AI Agent Builder). Build multi-turn WFM assistants grounded in your own workforce data and knowledge bases.</p>
+      <p class="tool-desc">Enterprise-grade agent development on Google Cloud. Build multi-turn WFM assistants grounded in your own workforce data and knowledge bases.</p>
       <a href="https://cloud.google.com/products/gemini-enterprise-agent-platform" target="_blank" rel="noopener" class="tool-link">cloud.google.com ↗</a>
     </div>
     <div class="tool-card" data-tags="ai-agent paid">
@@ -348,9 +370,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   </div>
 </section>
 
-<!-- SECTION 6 -->
+<!-- CC: Data Consolidation -->
 <section class="tools-section">
-  <div class="section-head"><h2>Data Consolidation & Integration</h2><span class="count">6 tools</span></div>
+  <div class="section-head"><h2>Data Consolidation &amp; Integration</h2><span class="count">6 tools</span></div>
   <div class="tools-grid">
     <div class="tool-card" data-tags="free-only">
       <div class="tool-top"><span class="tool-name">dbt (data build tool)</span><span class="badge badge-free">FREE / OSS</span></div>
@@ -362,7 +384,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
       <p class="tool-desc">Open-source ELT platform with 300+ connectors. Sync WFM, HRIS, and CRM data into a central analytics warehouse automatically.</p>
       <a href="https://airbyte.com" target="_blank" rel="noopener" class="tool-link">airbyte.com ↗</a>
     </div>
-    <div class="tool-card" data-tags="free-only">
+    <div class="tool-card" data-tags="freemium">
       <div class="tool-top"><span class="tool-name">Microsoft Power BI</span><span class="badge badge-freemium">FREEMIUM</span></div>
       <p class="tool-desc">Business intelligence platform with WFM dashboard templates. Power BI Desktop is free; connects to virtually any HR or workforce data source.</p>
       <a href="https://powerbi.microsoft.com" target="_blank" rel="noopener" class="tool-link">powerbi.microsoft.com ↗</a>
@@ -385,9 +407,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   </div>
 </section>
 
-<!-- SECTION 7 -->
+<!-- CC: Analytics -->
 <section class="tools-section">
-  <div class="section-head"><h2>Analytics, Adherence & KPI Tracking</h2><span class="count">4 tools</span></div>
+  <div class="section-head"><h2>Analytics, Adherence &amp; KPI Tracking</h2><span class="count">4 tools</span></div>
   <div class="tools-grid">
     <div class="tool-card" data-tags="analytics free-only">
       <div class="tool-top"><span class="tool-name">WorkforceAnalyst MAPE</span><span class="badge badge-free">FREE</span></div>
@@ -412,9 +434,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   </div>
 </section>
 
-<!-- SECTION 8 -->
+<!-- CC: Productivity & Workflow -->
 <section class="tools-section">
-  <div class="section-head"><h2>Productivity & Workflow</h2><span class="count">6 tools</span></div>
+  <div class="section-head"><h2>Productivity &amp; Workflow</h2><span class="count">6 tools</span></div>
   <div class="tools-grid">
     <div class="tool-card" data-tags="paid">
       <div class="tool-top"><span class="tool-name">Sourcetable</span><span class="badge badge-paid">PAID</span></div>
@@ -449,145 +471,356 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   </div>
 </section>
 
-<!-- SECTION 9 — ARTICLES & LITERATURE -->
+<!-- CC: Articles & Literature -->
 <section class="tools-section">
-  <div class="section-head"><h2>Articles & Literature</h2><span class="count">15 articles</span></div>
-  <p style="font-size:0.8125rem;color:var(--slate);margin-bottom:1.5rem;line-height:1.6">Practitioner-grade reading across every WFM discipline. Each subsection mirrors a tool category above — foundational articles, methodology deep dives, and current best practice guides.</p>
-
-  <!-- Staffing & Erlang -->
+  <div class="section-head"><h2>Articles &amp; Literature — Contact Center</h2><span class="count">15 articles</span></div>
+  <p style="font-size:0.8125rem;color:var(--slate);margin-bottom:1.5rem;line-height:1.6">Practitioner-grade reading across every CC WFM discipline. Each subsection mirrors a tool category above.</p>
   <div style="margin-bottom:2rem">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">Staffing & Erlang</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">Staffing &amp; Erlang</div>
     <div class="tools-grid">
-      <div class="tool-card" data-tags="erlang free-only">
-        <div class="tool-top"><span class="tool-name">Erlang C Formula — Made Simple</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">Call Centre Helper's definitive worked example of the Erlang C formula. Walks through inputs, calculations, and practical application step by step. The most-cited free Erlang reference for WFM practitioners.</p>
-        <a href="https://www.callcentrehelper.com/erlang-c-formula-example-121281.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-        <span class="tool-rec">★ Foundational Erlang reference</span>
-      </div>
-      <div class="tool-card" data-tags="erlang free-only">
-        <div class="tool-top"><span class="tool-name">Erlang Calculation — An Introduction</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">Accessible primer on Erlang C and A formulas, traffic intensity, and how queuing theory underpins contact center staffing. Covers assumptions, limitations, and when Erlang A is more appropriate than Erlang C.</p>
-        <a href="https://www.callcentrehelper.com/an-introduction-to-erlang-calculations-79806.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-      </div>
-      <div class="tool-card" data-tags="erlang free-only">
-        <div class="tool-top"><span class="tool-name">How to Use Erlang C for Staffing Decisions</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">Assembled's practitioner guide to applying Erlang C in support team planning. Covers traffic intensity, occupancy, and why Erlang C remains relevant in modern digital-first support environments.</p>
-        <a href="https://www.assembled.com/university/how-do-i-use-erlang-c-to-plan-staffing" target="_blank" rel="noopener" class="tool-link">assembled.com ↗</a>
-      </div>
+      <div class="tool-card" data-tags="erlang free-only"><div class="tool-top"><span class="tool-name">Erlang C Formula — Made Simple</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Call Centre Helper's definitive worked example of the Erlang C formula. Walks through inputs, calculations, and practical application step by step. The most-cited free Erlang reference for WFM practitioners.</p><a href="https://www.callcentrehelper.com/erlang-c-formula-example-121281.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a><span class="tool-rec">★ Foundational Erlang reference</span></div>
+      <div class="tool-card" data-tags="erlang free-only"><div class="tool-top"><span class="tool-name">Erlang Calculation — An Introduction</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Accessible primer on Erlang C and A formulas, traffic intensity, and how queuing theory underpins contact center staffing. Covers assumptions, limitations, and when Erlang A is more appropriate than Erlang C.</p><a href="https://www.callcentrehelper.com/an-introduction-to-erlang-calculations-79806.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a></div>
+      <div class="tool-card" data-tags="erlang free-only"><div class="tool-top"><span class="tool-name">How to Use Erlang C for Staffing Decisions</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Assembled's practitioner guide to applying Erlang C in support team planning. Covers traffic intensity, occupancy, and why Erlang C remains relevant in modern digital-first support environments.</p><a href="https://www.assembled.com/university/how-do-i-use-erlang-c-to-plan-staffing" target="_blank" rel="noopener" class="tool-link">assembled.com ↗</a></div>
     </div>
   </div>
-
-  <!-- Shrinkage, FTE & Capacity -->
   <div style="margin-bottom:2rem">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">Shrinkage, FTE & Capacity</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">Shrinkage, FTE &amp; Capacity</div>
     <div class="tools-grid">
-      <div class="tool-card" data-tags="free-only">
-        <div class="tool-top"><span class="tool-name">How to Calculate Contact Centre Shrinkage</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">The definitive practitioner guide to shrinkage calculation — formula, internal vs. external categories, and common calculation mistakes. Industry benchmark of 30–35% shrinkage discussed with expert commentary.</p>
-        <a href="https://www.callcentrehelper.com/how-to-calculate-contact-centre-shrinkage-90353.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-        <span class="tool-rec">★ Industry standard shrinkage reference</span>
-      </div>
-      <div class="tool-card" data-tags="free-only">
-        <div class="tool-top"><span class="tool-name">Agent Occupancy — Definition, Impact & Management</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">Call Centre Helper's comprehensive guide to occupancy as a KPI — how to calculate it, what happens above 85%, and the relationship between occupancy, AHT, and agent burnout. The standard occupancy reference for WFM practitioners.</p>
-        <a href="https://www.callcentrehelper.com/agent-occupancy-89603.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-      </div>
+      <div class="tool-card" data-tags="free-only"><div class="tool-top"><span class="tool-name">How to Calculate Contact Centre Shrinkage</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">The definitive practitioner guide to shrinkage calculation — formula, internal vs. external categories, and common calculation mistakes. Industry benchmark of 30–35% shrinkage discussed with expert commentary.</p><a href="https://www.callcentrehelper.com/how-to-calculate-contact-centre-shrinkage-90353.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a><span class="tool-rec">★ Industry standard shrinkage reference</span></div>
+      <div class="tool-card" data-tags="free-only"><div class="tool-top"><span class="tool-name">Agent Occupancy — Definition, Impact &amp; Management</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Call Centre Helper's comprehensive guide to occupancy as a KPI — how to calculate it, what happens above 85%, and the relationship between occupancy, AHT, and agent burnout.</p><a href="https://www.callcentrehelper.com/agent-occupancy-89603.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a></div>
     </div>
   </div>
-
-  <!-- Demand Forecasting & Volume Modeling -->
   <div style="margin-bottom:2rem">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">Demand Forecasting & Volume Modeling</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">Demand Forecasting &amp; Volume Modeling</div>
     <div class="tools-grid">
-      <div class="tool-card" data-tags="forecasting free-only">
-        <div class="tool-top"><span class="tool-name">The Top Call Centre Forecasting Models</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">A practical comparison of the four major contact center forecasting models — weighted moving average, linear regression, exponential smoothing, and Holt-Winters. Covers when to use each and how to measure forecast accuracy.</p>
-        <a href="https://www.callcentrehelper.com/the-latest-techniques-for-call-centre-forecasting-117394.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-        <span class="tool-rec">★ Best practical forecasting model overview</span>
-      </div>
-      <div class="tool-card" data-tags="forecasting free-only">
-        <div class="tool-top"><span class="tool-name">17 Ways to Improve Your Contact Centre Forecasts</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">Expert panel roundup covering historical data usage, channel blending, peak identification, and AI-assisted forecasting techniques. Broad coverage of both methodology and tooling improvements.</p>
-        <a href="https://www.callcentrehelper.com/workforce-optimisation-ways-improve-forecasts-144459.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-      </div>
+      <div class="tool-card" data-tags="forecasting free-only"><div class="tool-top"><span class="tool-name">The Top Call Centre Forecasting Models</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">A practical comparison of the four major contact center forecasting models — weighted moving average, linear regression, exponential smoothing, and Holt-Winters. Covers when to use each and how to measure forecast accuracy.</p><a href="https://www.callcentrehelper.com/the-latest-techniques-for-call-centre-forecasting-117394.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a><span class="tool-rec">★ Best practical forecasting model overview</span></div>
+      <div class="tool-card" data-tags="forecasting free-only"><div class="tool-top"><span class="tool-name">17 Ways to Improve Your Contact Centre Forecasts</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Expert panel roundup covering historical data usage, channel blending, peak identification, and AI-assisted forecasting techniques.</p><a href="https://www.callcentrehelper.com/workforce-optimisation-ways-improve-forecasts-144459.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a></div>
     </div>
   </div>
-
-  <!-- Scheduling Helpers -->
   <div style="margin-bottom:2rem">
     <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">Scheduling</div>
     <div class="tools-grid">
-      <div class="tool-card" data-tags="scheduling free-only">
-        <div class="tool-top"><span class="tool-name">The Best Shift Patterns for the Contact Centre</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">Comprehensive guide to fixed, rotating, flexi, and annualised shift patterns — with analysis of the trade-offs between operational efficiency and agent satisfaction. Widely referenced by WFM planners building new schedule frameworks.</p>
-        <a href="https://www.callcentrehelper.com/the-best-shift-patterns-for-the-contact-centre-16763.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-        <span class="tool-rec">★ Standard shift pattern reference</span>
-      </div>
-      <div class="tool-card" data-tags="scheduling free-only">
-        <div class="tool-top"><span class="tool-name">11 Ways to Improve Your Contact Centre Schedules</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">Expert panel guidance on schedule optimization — staggered start times, part-time coverage, split shifts, and agent preference integration. Focuses on designing schedules agents will actually adhere to.</p>
-        <a href="https://www.callcentrehelper.com/workforce-optimisation-improve-schedules-141809.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-      </div>
+      <div class="tool-card" data-tags="scheduling free-only"><div class="tool-top"><span class="tool-name">The Best Shift Patterns for the Contact Centre</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Comprehensive guide to fixed, rotating, flexi, and annualised shift patterns — with analysis of the trade-offs between operational efficiency and agent satisfaction.</p><a href="https://www.callcentrehelper.com/the-best-shift-patterns-for-the-contact-centre-16763.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a><span class="tool-rec">★ Standard shift pattern reference</span></div>
+      <div class="tool-card" data-tags="scheduling free-only"><div class="tool-top"><span class="tool-name">11 Ways to Improve Your Contact Centre Schedules</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Expert panel guidance on schedule optimization — staggered start times, part-time coverage, split shifts, and agent preference integration.</p><a href="https://www.callcentrehelper.com/workforce-optimisation-improve-schedules-141809.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a></div>
     </div>
   </div>
-
-  <!-- AI Agents for WFM -->
   <div style="margin-bottom:2rem">
     <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">AI Agents for WFM</div>
     <div class="tools-grid">
-      <div class="tool-card" data-tags="ai-agent free-only">
-        <div class="tool-top"><span class="tool-name">7 Technologies Redefining Contact Centres</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">October 2025 overview of AI-powered WFM, sentiment analysis, real-time agent guidance, and predictive scheduling. Covers how AI is now handling volume prediction from historical patterns, promotions, and external signals.</p>
-        <a href="https://www.callcentrehelper.com/technologies-redefining-contact-centres-255048.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-        <span class="tool-rec">★ Current AI in WFM overview</span>
-      </div>
-      <div class="tool-card" data-tags="ai-agent free-only">
-        <div class="tool-top"><span class="tool-name">10 Contact Center Automation Trends</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">Assembled's practitioner guide to automation in contact center operations — predictive routing, AI-assisted scheduling, real-time agent guidance, and workflow automation. Includes ROI benchmarks and implementation considerations.</p>
-        <a href="https://www.assembled.com/page/contact-center-automation-trends" target="_blank" rel="noopener" class="tool-link">assembled.com ↗</a>
-      </div>
+      <div class="tool-card" data-tags="ai-agent free-only"><div class="tool-top"><span class="tool-name">7 Technologies Redefining Contact Centres</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">October 2025 overview of AI-powered WFM, sentiment analysis, real-time agent guidance, and predictive scheduling. Covers how AI is now handling volume prediction from historical patterns, promotions, and external signals.</p><a href="https://www.callcentrehelper.com/technologies-redefining-contact-centres-255048.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a><span class="tool-rec">★ Current AI in WFM overview</span></div>
+      <div class="tool-card" data-tags="ai-agent free-only"><div class="tool-top"><span class="tool-name">10 Contact Center Automation Trends</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Assembled's practitioner guide to automation in contact center operations — predictive routing, AI-assisted scheduling, real-time agent guidance, and workflow automation.</p><a href="https://www.assembled.com/page/contact-center-automation-trends" target="_blank" rel="noopener" class="tool-link">assembled.com ↗</a></div>
     </div>
   </div>
-
-  <!-- Analytics, Adherence & KPI -->
   <div style="margin-bottom:2rem">
-    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">Analytics, Adherence & KPI Tracking</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">Analytics, Adherence &amp; KPI Tracking</div>
     <div class="tools-grid">
-      <div class="tool-card" data-tags="analytics free-only">
-        <div class="tool-top"><span class="tool-name">17 Ways to Improve Schedule Adherence</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">Expert panel guide to raising adherence without creating a surveillance culture — covers real-time tooling, agent empowerment, recognition strategies, and the relationship between adherence and forecast accuracy.</p>
-        <a href="https://www.callcentrehelper.com/ways-improve-adherence-164317.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-        <span class="tool-rec">★ Standard adherence improvement reference</span>
-      </div>
-      <div class="tool-card" data-tags="analytics free-only">
-        <div class="tool-top"><span class="tool-name">10 Tips for Intraday Management</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">Practical guide to intraday planning — morning briefings, real-time alarm thresholds, redeployment tactics, and SLA recovery strategies. Covers both reactive management and proactive gap-filling during the live day.</p>
-        <a href="https://www.callcentrehelper.com/12-top-tips-for-intraday-management-in-the-contact-centre-115275.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-      </div>
+      <div class="tool-card" data-tags="analytics free-only"><div class="tool-top"><span class="tool-name">17 Ways to Improve Schedule Adherence</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Expert panel guide to raising adherence without creating a surveillance culture — real-time tooling, agent empowerment, recognition strategies, and the relationship between adherence and forecast accuracy.</p><a href="https://www.callcentrehelper.com/ways-improve-adherence-164317.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a><span class="tool-rec">★ Standard adherence improvement reference</span></div>
+      <div class="tool-card" data-tags="analytics free-only"><div class="tool-top"><span class="tool-name">10 Tips for Intraday Management</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Practical guide to intraday planning — morning briefings, real-time alarm thresholds, redeployment tactics, and SLA recovery strategies.</p><a href="https://www.callcentrehelper.com/12-top-tips-for-intraday-management-in-the-contact-centre-115275.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a></div>
     </div>
   </div>
-
-  <!-- Productivity & Workflow -->
   <div>
-    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">Productivity & Workflow</div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--amber);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(244,165,0,0.15)">Productivity &amp; Workflow</div>
     <div class="tools-grid">
-      <div class="tool-card" data-tags="free-only">
-        <div class="tool-top"><span class="tool-name">WFM Reference Guide</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">Call Centre Helper's comprehensive WFM reference hub — a single page linking to their best articles on forecasting, scheduling, adherence, intraday management, and technology. The practitioner's starting point for any WFM topic.</p>
-        <a href="https://www.callcentrehelper.com/workforce-management-reference-guide-57260.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-        <span class="tool-rec">★ Best single WFM resource hub</span>
-      </div>
-      <div class="tool-card" data-tags="free-only">
-        <div class="tool-top"><span class="tool-name">10 WFM Best Practices You Should Know</span><span class="badge badge-free">FREE</span></div>
-        <p class="tool-desc">A practitioner's checklist of WFM fundamentals — from long-term forecasting discipline and automation of shift swaps to the value of back-office WFM and managing intraday tolerance thresholds. Practical and vendor-neutral.</p>
-        <a href="https://www.callcentrehelper.com/workforce-management-best-practices-57256.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a>
-      </div>
+      <div class="tool-card" data-tags="free-only"><div class="tool-top"><span class="tool-name">WFM Reference Guide</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Call Centre Helper's comprehensive WFM reference hub — a single page linking to their best articles on forecasting, scheduling, adherence, intraday management, and technology.</p><a href="https://www.callcentrehelper.com/workforce-management-reference-guide-57260.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a><span class="tool-rec">★ Best single WFM resource hub</span></div>
+      <div class="tool-card" data-tags="free-only"><div class="tool-top"><span class="tool-name">10 WFM Best Practices You Should Know</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">A practitioner's checklist of WFM fundamentals — from long-term forecasting discipline and automation of shift swaps to the value of back-office WFM and managing intraday tolerance thresholds.</p><a href="https://www.callcentrehelper.com/workforce-management-best-practices-57256.htm" target="_blank" rel="noopener" class="tool-link">callcentrehelper.com ↗</a></div>
     </div>
   </div>
+</section>
 
+
+<!-- ══ FIELD MANAGEMENT ══ -->
+<div class="sector-banner field">
+  <span class="sector-icon">🔧</span>
+  <div>
+    <div class="sector-label" style="color:#22D4C8">Field Management</div>
+    <div class="sector-title">Field Team Planning &amp; Management</div>
+  </div>
+  <p class="sector-desc" style="color:#8892b0">FSM platforms, route optimization, territory planning, technician scheduling, AI dispatch agents, and capacity planning for field operations.</p>
+</div>
+
+<!-- FM: FSM Platforms -->
+<section class="tools-section">
+  <div class="section-head" style="border-bottom-color:rgba(34,212,200,0.2)"><h2 style="color:#22D4C8">FSM Platforms</h2><span class="count" style="color:rgba(34,212,200,0.6)">8 tools</span></div>
+  <div class="tools-grid">
+    <div class="tool-card" data-tags="field freemium" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Fieldwire</span><span class="badge badge-freemium">FREEMIUM</span></div>
+      <p class="tool-desc">Construction and field team task management platform. Free tier for up to 5 users; handles work orders, scheduling, inspection checklists, and field reporting. Strong mobile app for crews on-site.</p>
+      <a href="https://www.fieldwire.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">fieldwire.com ↗</a>
+      <span class="tool-rec" style="color:#22D4C8">★ Best free-entry FSM for field teams</span>
+    </div>
+    <div class="tool-card" data-tags="field paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">ServiceTitan</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Enterprise FSM for home services and commercial contractors. Covers dispatch, scheduling, GPS tracking, customer management, and revenue analytics. The dominant platform in trades (HVAC, plumbing, electrical).</p>
+      <a href="https://www.servicetitan.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">servicetitan.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Salesforce Field Service</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Enterprise FSM layer on the Salesforce platform. AI-powered scheduling optimizer, mobile workforce management, real-time crew visibility, and deep CRM integration. Standard for large enterprise field operations.</p>
+      <a href="https://www.salesforce.com/products/field-service/overview/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">salesforce.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">IFS Field Service Management</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Enterprise FSM with AI-powered scheduling, parts management, and IoT integration for predictive maintenance. Used in utilities, telecom, and industrial services. Strong real-time SLA monitoring.</p>
+      <a href="https://www.ifs.com/solutions/field-service-management/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">ifs.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field freemium" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Jobber</span><span class="badge badge-freemium">FREEMIUM</span></div>
+      <p class="tool-desc">FSM platform for SMB field service businesses. Quoting, scheduling, dispatching, invoicing, and client communication in one tool. Widely used in landscaping, cleaning, and home services.</p>
+      <a href="https://getjobber.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">getjobber.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">ServiceMax</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Enterprise FSM focused on complex equipment and asset service. Strong for medical device, industrial machinery, and high-value asset maintenance with compliance requirements.</p>
+      <a href="https://www.servicemax.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">servicemax.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field freemium" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Housecall Pro</span><span class="badge badge-freemium">FREEMIUM</span></div>
+      <p class="tool-desc">All-in-one FSM for residential field service SMBs. Scheduling, dispatching, customer messaging, payments, and reporting with a strong mobile experience for technicians in the field.</p>
+      <a href="https://www.housecallpro.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">housecallpro.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Microsoft Dynamics 365 Field Service</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Enterprise FSM within the Microsoft ecosystem. AI-powered resource scheduling, predictive maintenance via IoT Hub, mobile technician app, and deep integration with Dynamics CRM and Teams.</p>
+      <a href="https://www.microsoft.com/en-us/dynamics-365/products/field-service" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">microsoft.com ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FM: Capacity Planning -->
+<section class="tools-section">
+  <div class="section-head" style="border-bottom-color:rgba(34,212,200,0.2)"><h2 style="color:#22D4C8">Field Capacity Planning</h2><span class="count" style="color:rgba(34,212,200,0.6)">6 tools</span></div>
+  <div class="tools-grid">
+    <div class="tool-card" data-tags="field free-only" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Google Sheets + Territory Templates</span><span class="badge badge-free">FREE</span></div>
+      <p class="tool-desc">Practitioner-built free templates for field FTE modeling, territory assignment, and coverage gap analysis. Start with Google Sheets and the Field Service Capacity Planning template from the Workspace Marketplace.</p>
+      <a href="https://workspace.google.com/marketplace" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">workspace.google.com ↗</a>
+      <span class="tool-rec" style="color:#22D4C8">★ Best zero-cost starting point</span>
+    </div>
+    <div class="tool-card" data-tags="field freemium" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Vena FTE Planner</span><span class="badge badge-freemium">FREEMIUM</span></div>
+      <p class="tool-desc">Excel-native capacity planning with FTE modeling and attrition tracking. Applies equally to field teams — model technician headcount, ramp time, and territory coverage requirements by quarter.</p>
+      <a href="https://www.venasolutions.com/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">venasolutions.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Anaplan Field Workforce Planning</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Enterprise scenario modeling for field capacity. Used by utilities and telecom for multi-region technician headcount planning, skills matrix tracking, and seasonal surge modeling.</p>
+      <a href="https://www.anaplan.com/applications/operational-workforce-planning-app/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">anaplan.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Salesforce Maps (Territory Planning)</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Geographic territory planning and capacity modeling with live CRM data. Balance technician workloads across territories, identify coverage gaps, and model territory realignment scenarios before implementation.</p>
+      <a href="https://www.salesforce.com/products/maps/overview/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">salesforce.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Planful Workforce</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Continuous planning for field workforce headcount. Model hiring pipelines, attrition, and geographic expansion in a connected financial + operational planning environment.</p>
+      <a href="https://planful.com/planful-ai/planner/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">planful.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field freemium" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Airtable Field Ops Templates</span><span class="badge badge-freemium">FREEMIUM</span></div>
+      <p class="tool-desc">Flexible database for field capacity tracking — technician availability calendars, skill inventories, territory assignment tables, and project pipeline views. Free tier supports small field teams.</p>
+      <a href="https://www.airtable.com/templates/operations" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">airtable.com ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FM: Demand Forecasting -->
+<section class="tools-section">
+  <div class="section-head" style="border-bottom-color:rgba(34,212,200,0.2)"><h2 style="color:#22D4C8">Field Demand Forecasting &amp; Work Order Volume Modeling</h2><span class="count" style="color:rgba(34,212,200,0.6)">5 tools</span></div>
+  <div class="tools-grid">
+    <div class="tool-card" data-tags="field forecasting free-only" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">IFS Work Order Forecasting Guides</span><span class="badge badge-free">FREE</span></div>
+      <p class="tool-desc">IFS's practitioner resources on forecasting field service demand — seasonal patterns, preventive maintenance cycles, and how to build work order volume models from historical asset data. Vendor-neutral methodology sections are broadly applicable.</p>
+      <a href="https://www.ifs.com/resources/blog/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">ifs.com ↗</a>
+      <span class="tool-rec" style="color:#22D4C8">★ Best field demand forecasting methodology reference</span>
+    </div>
+    <div class="tool-card" data-tags="field forecasting paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">ServiceMax Demand Insights</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Predictive work order volume modeling embedded in ServiceMax FSM. Uses asset age, usage data, and historical failure rates to forecast technician demand weeks out. Strong for equipment-centric field service.</p>
+      <a href="https://www.servicemax.com/products/analytics" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">servicemax.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field forecasting paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Salesforce Field Service Forecasting</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">ML-powered capacity and demand forecasting within Salesforce Field Service. Forecasts technician demand by region, skill, and service type — connects directly to the scheduling optimizer for automated staffing adjustments.</p>
+      <a href="https://www.salesforce.com/products/field-service/overview/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">salesforce.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field forecasting paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Coefficient</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Live data connector for Google Sheets and Excel. Pull work order history, asset data, and field CRM records for custom field demand forecasting models without writing SQL.</p>
+      <a href="https://coefficient.io" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">coefficient.io ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field forecasting paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Planful Scenario Modeling</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Scenario-based demand planning for field teams. Model spike demand from new contracts, seasonal surges, or product launches — and project required technician headcount by region.</p>
+      <a href="https://planful.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">planful.com ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FM: Route Optimization & Scheduling -->
+<section class="tools-section">
+  <div class="section-head" style="border-bottom-color:rgba(34,212,200,0.2)"><h2 style="color:#22D4C8">Route Optimization &amp; Scheduling</h2><span class="count" style="color:rgba(34,212,200,0.6)">7 tools</span></div>
+  <div class="tools-grid">
+    <div class="tool-card" data-tags="field scheduling freemium" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Google Maps Platform — Routes API</span><span class="badge badge-freemium">FREEMIUM</span></div>
+      <p class="tool-desc">Free tier covers $200/month of API usage. Used by FSM teams to embed drive time and route data directly into custom scheduling tools. Pairs with Sheets for lightweight route planning.</p>
+      <a href="https://developers.google.com/maps/documentation/routes" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">developers.google.com ↗</a>
+      <span class="tool-rec" style="color:#22D4C8">★ Best free-tier route data API</span>
+    </div>
+    <div class="tool-card" data-tags="field scheduling freemium" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">OptimoRoute</span><span class="badge badge-freemium">FREEMIUM</span></div>
+      <p class="tool-desc">Route planning and optimization for field teams with time-window constraints, technician skills, and multi-day scheduling. Free trial; strong SMB to mid-market pricing. Used widely in delivery and field service.</p>
+      <a href="https://optimoroute.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">optimoroute.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field scheduling paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Route4Me</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Dynamic route optimization with real-time re-routing, territory management, and driver/technician tracking. Integrates with major FSM platforms and has a dedicated field service scheduling API.</p>
+      <a href="https://route4me.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">route4me.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field scheduling paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Badger Maps</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Field sales and service route planner built for reps and technicians. Visualizes territories on a map, optimizes multi-stop routes, and integrates with CRM systems.</p>
+      <a href="https://www.badgermapping.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">badgermapping.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field scheduling paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Mapbox Optimization API</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Developer-grade route optimization API with vehicle routing problem (VRP) support. Used by engineering teams to build custom field scheduling tools with advanced constraint modeling (skills, time windows, capacity).</p>
+      <a href="https://www.mapbox.com/solutions/routing-optimization" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">mapbox.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field scheduling paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Descartes Routing</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Enterprise routing and territory optimization used by large fleet and field service operations. Handles thousands of stops, complex constraints, and multi-region territory balancing at scale.</p>
+      <a href="https://www.descartes.com/resources/logistics-technology/route-optimization" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">descartes.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field scheduling freemium" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Deputy (Field &amp; Frontline)</span><span class="badge badge-freemium">FREEMIUM</span></div>
+      <p class="tool-desc">Shift scheduling platform used by field-adjacent frontline teams. Auto-scheduling based on availability and demand, with mobile clock-in and GPS verification for distributed workforces.</p>
+      <a href="https://www.deputy.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">deputy.com ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FM: AI Agents -->
+<section class="tools-section">
+  <div class="section-head" style="border-bottom-color:rgba(34,212,200,0.2)"><h2 style="color:#22D4C8">AI Agents for Field Operations</h2><span class="count" style="color:rgba(34,212,200,0.6)">6 tools</span></div>
+  <div class="tools-grid">
+    <div class="tool-card" data-tags="field ai-agent paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Salesforce Agentforce for Field Service</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">AI agent layer built into Salesforce Field Service. Autonomously handles appointment scheduling, technician dispatch recommendations, and customer communication — escalating to humans only when needed.</p>
+      <a href="https://www.salesforce.com/agentforce/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">salesforce.com ↗</a>
+      <span class="tool-rec" style="color:#22D4C8">★ Most mature AI agent for FSM</span>
+    </div>
+    <div class="tool-card" data-tags="field ai-agent paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">ServiceTitan AI</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">AI features embedded in ServiceTitan: smart dispatch recommendations, job duration prediction, technician performance insights, and AI-assisted customer communication for trades businesses.</p>
+      <a href="https://www.servicetitan.com/features/ai" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">servicetitan.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field ai-agent free-only" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">n8n (Field Workflow Automation)</span><span class="badge badge-free">FREE / OSS</span></div>
+      <p class="tool-desc">Open-source workflow automation for field operations. Build AI agent pipelines connecting FSM APIs, dispatch systems, and communication tools. Automate work order creation, technician notifications, and SLA alerting.</p>
+      <a href="https://n8n.io" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">n8n.io ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field ai-agent freemium" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Zapier FSM Integrations</span><span class="badge badge-freemium">FREEMIUM</span></div>
+      <p class="tool-desc">No-code automation connecting FSM platforms (ServiceTitan, Jobber, Housecall Pro) with CRM, communication, and analytics tools. Build AI-triggered workflows without engineering resources.</p>
+      <a href="https://zapier.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">zapier.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field ai-agent paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Microsoft Copilot Studio (Field Ops)</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Build AI agents for field teams connected to Dynamics 365 Field Service. Create conversational dispatch assistants, technician briefing bots, and SLA monitoring agents grounded in your operational data.</p>
+      <a href="https://www.microsoft.com/en-us/microsoft-365-copilot/microsoft-copilot-studio" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">microsoft.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field ai-agent paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Amazon Bedrock Agents (Field)</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Fully managed AI agents on AWS for field operations. Connect to work order databases, parts inventory, and scheduling APIs to build autonomous dispatch and escalation workflows.</p>
+      <a href="https://aws.amazon.com/bedrock/agents/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">aws.amazon.com ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FM: Analytics & KPI -->
+<section class="tools-section">
+  <div class="section-head" style="border-bottom-color:rgba(34,212,200,0.2)"><h2 style="color:#22D4C8">Field Analytics &amp; KPI Tracking</h2><span class="count" style="color:rgba(34,212,200,0.6)">5 tools</span></div>
+  <div class="tools-grid">
+    <div class="tool-card" data-tags="field analytics free-only" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Looker Studio (Field Dashboards)</span><span class="badge badge-free">FREE</span></div>
+      <p class="tool-desc">Google's free BI tool for building live field performance dashboards. Connect to Google Sheets, BigQuery, or FSM exports to track first-time fix rate, technician utilization, SLA compliance, and MTTR.</p>
+      <a href="https://lookerstudio.google.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">lookerstudio.google.com ↗</a>
+      <span class="tool-rec" style="color:#22D4C8">★ Best free field KPI dashboard builder</span>
+    </div>
+    <div class="tool-card" data-tags="field analytics paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">ServiceTitan Reporting</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Built-in analytics for field service KPIs: technician performance scorecards, job completion rates, average revenue per job, and SLA attainment. Designed for field operations managers and business owners.</p>
+      <a href="https://www.servicetitan.com/features/reporting" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">servicetitan.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field analytics paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Salesforce Field Service Analytics</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">Pre-built analytics dashboards for field operations within Salesforce. Tracks work order backlog, technician utilization, MTTR, first-time fix rate, and customer satisfaction — with drill-down by region and skill.</p>
+      <a href="https://www.salesforce.com/products/field-service/overview/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">salesforce.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field analytics paid" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Visier (Field Workforce)</span><span class="badge badge-paid">PAID</span></div>
+      <p class="tool-desc">People analytics platform adaptable to field workforce operations. Track technician attrition risk, geographic coverage gaps, certification compliance, and workforce performance trends across regions.</p>
+      <a href="https://www.visier.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">visier.com ↗</a>
+    </div>
+    <div class="tool-card" data-tags="field analytics freemium" style="border-color:rgba(34,212,200,0.12)">
+      <div class="tool-top"><span class="tool-name">Geckoboard (Field Wallboards)</span><span class="badge badge-freemium">FREEMIUM</span></div>
+      <p class="tool-desc">Real-time KPI wallboard builder. Used by field operations centers to display live technician dispatch status, SLA countdown timers, job completion rates, and regional capacity metrics for dispatch teams.</p>
+      <a href="https://www.geckoboard.com" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">geckoboard.com ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FM: Articles & Literature -->
+<section class="tools-section">
+  <div class="section-head" style="border-bottom-color:rgba(34,212,200,0.2)"><h2 style="color:#22D4C8">Articles &amp; Literature — Field Management</h2><span class="count" style="color:rgba(34,212,200,0.6)">12 articles</span></div>
+  <p style="font-size:0.8125rem;color:var(--slate);margin-bottom:1.5rem;line-height:1.6">Practitioner-grade reading for field operations planners, FSM managers, and dispatch teams. Mirrors the CC categories above applied to field contexts.</p>
+  <div style="margin-bottom:2rem">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D4C8;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(34,212,200,0.15)">FSM Platforms</div>
+    <div class="tools-grid">
+      <div class="tool-card" data-tags="field free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">What Is Field Service Management?</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">IFS's comprehensive primer on FSM — what it is, what platforms cover, and how modern FSM differs from legacy work order management. Covers scheduling, dispatch, mobile workforce, parts management, and customer experience layers.</p><a href="https://www.ifs.com/us/glossary/field-service-management/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">ifs.com ↗</a><span class="tool-rec" style="color:#22D4C8">★ Best FSM overview for new practitioners</span></div>
+      <div class="tool-card" data-tags="field free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">Gartner FSM Market Guide</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Gartner's market guide for field service management platforms. Covers platform capabilities, vendor landscape, and evaluation criteria for FSM buyers. Valuable for platform selection decisions and building an FSM RFP.</p><a href="https://www.gartner.com/reviews/market/field-service-management-applications" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">gartner.com ↗</a></div>
+    </div>
+  </div>
+  <div style="margin-bottom:2rem">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D4C8;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(34,212,200,0.15)">Field Capacity Planning</div>
+    <div class="tools-grid">
+      <div class="tool-card" data-tags="field free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">Field Service Technician Utilization — Best Practices</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">ServiceMax's practitioner guide to measuring and improving technician utilization — the field equivalent of agent occupancy. Covers utilization benchmarks (target: 75–85%), how to calculate billable vs. non-billable time, and levers for improvement.</p><a href="https://www.servicemax.com/resources/blog/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">servicemax.com ↗</a><span class="tool-rec" style="color:#22D4C8">★ Field equivalent of CC occupancy guide</span></div>
+      <div class="tool-card" data-tags="field free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">Territory Design for Field Teams</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Salesforce Maps team guide to geographic territory design — balancing workload, minimizing drive time, and ensuring equitable technician assignments across regions. Framework applicable regardless of FSM platform.</p><a href="https://www.salesforce.com/resources/articles/territory-management/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">salesforce.com ↗</a></div>
+    </div>
+  </div>
+  <div style="margin-bottom:2rem">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D4C8;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(34,212,200,0.15)">Demand Forecasting &amp; Work Order Modeling</div>
+    <div class="tools-grid">
+      <div class="tool-card" data-tags="field forecasting free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">Predictive Maintenance &amp; Work Order Forecasting</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">IFS guide to predictive maintenance as a demand forecasting tool — how asset condition monitoring and failure probability models replace reactive work order spikes with planned technician demand. The field equivalent of contact center volume modeling.</p><a href="https://www.ifs.com/us/resources/blog/predictive-maintenance/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">ifs.com ↗</a><span class="tool-rec" style="color:#22D4C8">★ Field forecasting methodology reference</span></div>
+      <div class="tool-card" data-tags="field forecasting free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">Seasonal Field Service Planning Guide</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Jobber's practitioner guide to seasonal demand surges in field service — how to forecast peak periods, pre-schedule technicians, build customer communication queues, and avoid the classic HVAC summer / heating winter overstaffing trap.</p><a href="https://getjobber.com/resources/business-guides/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">getjobber.com ↗</a></div>
+    </div>
+  </div>
+  <div style="margin-bottom:2rem">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D4C8;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(34,212,200,0.15)">Route Optimization &amp; Scheduling</div>
+    <div class="tools-grid">
+      <div class="tool-card" data-tags="field scheduling free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">The Vehicle Routing Problem — A Practitioner's Guide</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">OptimoRoute's plain-language guide to the Vehicle Routing Problem (VRP) — the mathematical foundation behind field route optimization. Covers time windows, technician capacity, skill constraints, and why VRP is harder than it looks. Essential reading for anyone building or evaluating routing tools.</p><a href="https://optimoroute.com/vehicle-routing-problem/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">optimoroute.com ↗</a><span class="tool-rec" style="color:#22D4C8">★ Best VRP/routing methodology reference</span></div>
+      <div class="tool-card" data-tags="field scheduling free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">Dynamic Scheduling for Field Teams</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">Salesforce guide to the shift from static daily schedules to dynamic intraday scheduling — how AI re-optimizes technician routes in response to cancellations, emergency jobs, and traffic in real time. The field equivalent of intraday management.</p><a href="https://www.salesforce.com/resources/articles/dynamic-scheduling/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">salesforce.com ↗</a></div>
+    </div>
+  </div>
+  <div style="margin-bottom:2rem">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D4C8;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(34,212,200,0.15)">AI Agents for Field Operations</div>
+    <div class="tools-grid">
+      <div class="tool-card" data-tags="field ai-agent free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">AI in Field Service — State of the Industry</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">IFS research on AI adoption in field service management — autonomous dispatch, predictive maintenance, AI-assisted technician guidance, and customer self-scheduling. Covers where AI is delivering ROI and where deployments are still maturing.</p><a href="https://www.ifs.com/resources/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">ifs.com ↗</a><span class="tool-rec" style="color:#22D4C8">★ Current AI in field service overview</span></div>
+      <div class="tool-card" data-tags="field ai-agent free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">Autonomous Dispatch — How AI Schedules Field Teams</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">ServiceMax's guide to autonomous dispatch algorithms — how constraint-based AI weighs technician skills, location, parts availability, and SLA priority to assign jobs without human intervention. Field parallel to contact center ACD routing.</p><a href="https://www.servicemax.com/resources/blog/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">servicemax.com ↗</a></div>
+    </div>
+  </div>
+  <div>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#22D4C8;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.875rem;padding-bottom:0.4rem;border-bottom:1px solid rgba(34,212,200,0.15)">Field Analytics &amp; KPI Tracking</div>
+    <div class="tools-grid">
+      <div class="tool-card" data-tags="field analytics free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">The 10 Field Service KPIs Every Manager Should Track</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">ServiceTitan's practitioner guide to field service KPIs — first-time fix rate, MTTR, technician utilization, SLA compliance, customer satisfaction, and revenue per technician. Includes benchmarks and formulas. The field equivalent of contact center KPI frameworks.</p><a href="https://www.servicetitan.com/resources/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">servicetitan.com ↗</a><span class="tool-rec" style="color:#22D4C8">★ Field KPI reference — equivalent to CC adherence guides</span></div>
+      <div class="tool-card" data-tags="field analytics free-only" style="border-color:rgba(34,212,200,0.12)"><div class="tool-top"><span class="tool-name">First-Time Fix Rate — How to Measure &amp; Improve It</span><span class="badge badge-free">FREE</span></div><p class="tool-desc">IFS guide to first-time fix rate (FTFR) — the single most important field service quality KPI. Covers how to calculate it, what affects it (parts availability, technician skills, job information accuracy), and how FSM platforms help drive FTFR above the 80% industry benchmark.</p><a href="https://www.ifs.com/us/glossary/first-time-fix-rate/" target="_blank" rel="noopener" class="tool-link" style="color:#22D4C8">ifs.com ↗</a></div>
+    </div>
+  </div>
 </section>
 
 <div class="seam-strip" style="margin:1rem 2rem 3rem">
+
   <p><strong>Want curated briefings on new WFM tools, research, and AI agent use cases?</strong> The Seam intelligence engine crawls industry sources daily and delivers structured summaries for practitioners.</p>
   <a href="seam.html#intelligence" class="btn-amber">Try The Seam →</a>
 </div>
