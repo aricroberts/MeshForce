@@ -78,6 +78,25 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
 /* ── Sector divider banners ── */
 .sector-banner{position:relative;z-index:1;max-width:1200px;margin:2.5rem auto 0;padding:1rem 2rem;display:flex;align-items:center;gap:1rem;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
 .sector-banner.field{border-top-color:rgba(34,212,200,0.3);border-bottom-color:rgba(34,212,200,0.3)}
+
+/* ── Click tracking / popularity badges ── */
+.popular-bar{position:relative;z-index:1;max-width:1200px;margin:0 auto 0;padding:0 2rem 1.5rem}
+.popular-bar-inner{background:rgba(244,165,0,0.06);border:1px solid rgba(244,165,0,0.18);border-radius:8px;padding:1rem 1.5rem}
+.popular-bar-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.85rem;flex-wrap:wrap}
+.popular-bar-title{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--amber)}
+.popular-bar-sub{font-size:0.78rem;color:var(--slate)}
+.popular-list{display:flex;flex-wrap:wrap;gap:0.5rem}
+.popular-chip{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(17,34,64,0.9);border:1px solid rgba(244,165,0,0.22);border-radius:5px;padding:0.3rem 0.75rem;font-size:0.78rem;color:var(--white);text-decoration:none;transition:border-color 0.2s;cursor:pointer}
+.popular-chip:hover{border-color:rgba(244,165,0,0.55);color:var(--amber)}
+.popular-chip-rank{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--slate);min-width:1.1em}
+.popular-chip-name{font-weight:500}
+.popular-chip-count{font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--amber);opacity:0.75}
+.popular-badge{display:inline-block;font-size:0.6rem;font-family:'JetBrains Mono',monospace;background:rgba(244,165,0,0.15);border:1px solid rgba(244,165,0,0.35);color:var(--amber);border-radius:3px;padding:0.15rem 0.4rem;margin-left:0.4rem;letter-spacing:0.04em;vertical-align:middle}
+.popular-badge.top1{background:rgba(244,165,0,0.25);border-color:rgba(244,165,0,0.6)}
+.sort-popular-btn{background:transparent;border:1px solid rgba(244,165,0,0.35);color:var(--amber);padding:0.3rem 0.85rem;border-radius:20px;font-size:0.78rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.sort-popular-btn:hover,.sort-popular-btn.active{background:rgba(244,165,0,0.12);border-color:var(--amber)}
+.popular-loading{font-size:0.78rem;color:var(--slate);font-family:'JetBrains Mono',monospace}
+/* ── /Click tracking ── */
 .sector-icon{font-size:1.25rem}
 .sector-label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber)}
 .sector-banner.field .sector-label{color:#22D4C8}
@@ -147,8 +166,25 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
   <button class="pill" onclick="setTag('scheduling',this)">Scheduling</button>
   <button class="pill" onclick="setTag('analytics',this)">Analytics</button>
   <button class="pill" onclick="setTag('field',this)" style="border-color:rgba(34,212,200,0.3);color:#22D4C8">Field</button>
+  <button class="sort-popular-btn" id="sortPopularBtn" onclick="togglePopularSort()">🔥 Most Popular</button>
   <span class="count-label" id="countLabel">113 tools shown</span>
 </div>
+
+<!-- ── Most Popular Bar ── -->
+<div class="popular-bar" id="popularBar" style="display:none">
+  <div class="popular-bar-inner">
+    <div class="popular-bar-head">
+      <div>
+        <div class="popular-bar-title">🔥 Most Visited Tools</div>
+        <div class="popular-bar-sub">Ranked by real click-through traffic from this page</div>
+      </div>
+    </div>
+    <div class="popular-list" id="popularList">
+      <span class="popular-loading">Loading…</span>
+    </div>
+  </div>
+</div>
+<!-- ── /Most Popular Bar ── -->
 
 
 <!-- ══ CONTACT CENTER ══ -->
@@ -842,6 +878,183 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:2.5r
 </footer>
 
 <script>
+/* ── Click tracking & Most Popular ── */
+var SUPA_URL = 'https://epntzskzmdlfqyosscbc.supabase.co';
+var SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwbnR6c2t6bWRsZnFZb3NzY2JjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDAwMDAwMDAsImV4cCI6MjAxNTM2MDAwMH0.REPLACE_WITH_YOUR_REAL_ANON_KEY';
+var PAGE_ID = 'tools';
+var _popularData = [];
+var _sortByPopular = false;
+var _originalOrder = [];
+
+function slugify(str) {
+  return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function trackClick(name, url) {
+  var key = slugify(name);
+  try {
+    fetch(SUPA_URL + '/rest/v1/directory_clicks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPA_ANON,
+        'Authorization': 'Bearer ' + SUPA_ANON,
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify({
+        listing_key: key,
+        listing_name: name,
+        listing_url: url,
+        page: PAGE_ID,
+        click_count: 1,
+        last_clicked_at: new Date().toISOString()
+      })
+    }).then(function(r) {
+      if (r.status === 409 || r.status === 200 || r.status === 201) {
+        fetch(SUPA_URL + '/rest/v1/rpc/increment_click', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPA_ANON,
+            'Authorization': 'Bearer ' + SUPA_ANON
+          },
+          body: JSON.stringify({ p_key: key, p_page: PAGE_ID })
+        }).catch(function(){});
+      }
+    }).catch(function(){});
+  } catch(e) {}
+}
+
+function instrumentLinks() {
+  var links = document.querySelectorAll('a.tool-link[href^="http"]');
+  for (var i = 0; i < links.length; i++) {
+    (function(link) {
+      var name = '';
+      var card = link.closest('.tool-card');
+      if (card) {
+        var nameEl = card.querySelector('.tool-name');
+        if (nameEl) name = nameEl.textContent.trim();
+      }
+      if (!name) name = link.textContent.replace('↗','').trim();
+      link.addEventListener('click', function() {
+        trackClick(name, link.href);
+      });
+    })(links[i]);
+  }
+}
+
+function loadPopularData() {
+  try {
+    fetch(SUPA_URL + '/rest/v1/directory_clicks?page=eq.' + PAGE_ID + '&order=click_count.desc&limit=20', {
+      headers: {
+        'apikey': SUPA_ANON,
+        'Authorization': 'Bearer ' + SUPA_ANON
+      }
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!data || !data.length) { return; }
+      _popularData = data;
+      renderPopularBar(data);
+      document.getElementById('popularBar').style.display = '';
+    })
+    .catch(function(){});
+  } catch(e) {}
+}
+
+function renderPopularBar(data) {
+  var list = document.getElementById('popularList');
+  if (!list) return;
+  var top = data.slice(0, 10);
+  if (!top.length) { list.innerHTML = '<span class="popular-loading">No clicks recorded yet.</span>'; return; }
+  var html = '';
+  for (var i = 0; i < top.length; i++) {
+    var item = top[i];
+    var medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i + 1) + '.';
+    html += '<a class="popular-chip" href="' + item.listing_url + '" target="_blank" rel="noopener" onclick="trackClick(\'' + item.listing_name.replace(/'/g, "\\'") + '\',\'' + item.listing_url + '\')">'
+      + '<span class="popular-chip-rank">' + medal + '</span>'
+      + '<span class="popular-chip-name">' + item.listing_name + '</span>'
+      + '<span class="popular-chip-count">' + item.click_count + ' clicks</span>'
+      + '</a>';
+  }
+  list.innerHTML = html;
+
+  var rankMap = {};
+  for (var j = 0; j < top.length; j++) {
+    rankMap[top[j].listing_key] = { rank: j + 1, count: top[j].click_count };
+  }
+  var cards = document.querySelectorAll('.tool-card');
+  for (var k = 0; k < cards.length; k++) {
+    var nameEl = cards[k].querySelector('.tool-name');
+    if (!nameEl) continue;
+    var slug = slugify(nameEl.textContent.trim());
+    if (rankMap[slug]) {
+      var info = rankMap[slug];
+      var label = info.rank === 1 ? '🔥 #1 Most Visited' : info.rank <= 3 ? '🔥 Top 3' : '🔥 Popular';
+      var badge = document.createElement('span');
+      badge.className = 'popular-badge' + (info.rank === 1 ? ' top1' : '');
+      badge.textContent = label;
+      var topEl = cards[k].querySelector('.tool-top');
+      if (topEl) topEl.appendChild(badge);
+    }
+  }
+}
+
+function togglePopularSort() {
+  _sortByPopular = !_sortByPopular;
+  var btn = document.getElementById('sortPopularBtn');
+  if (btn) btn.classList.toggle('active', _sortByPopular);
+
+  if (!_sortByPopular) {
+    for (var i = 0; i < _originalOrder.length; i++) {
+      var item = _originalOrder[i];
+      if (item.grid && item.card) item.grid.appendChild(item.card);
+    }
+    return;
+  }
+
+  if (!_popularData.length) { alert('No popularity data yet — visit some listings first!'); _sortByPopular = false; return; }
+
+  if (!_originalOrder.length) {
+    var grids = document.querySelectorAll('.tools-grid');
+    for (var g = 0; g < grids.length; g++) {
+      var cards = grids[g].querySelectorAll('.tool-card');
+      for (var c = 0; c < cards.length; c++) {
+        _originalOrder.push({ grid: grids[g], card: cards[c] });
+      }
+    }
+  }
+
+  var rankMap2 = {};
+  for (var r = 0; r < _popularData.length; r++) {
+    rankMap2[_popularData[r].listing_key] = _popularData[r].click_count;
+  }
+
+  var grids2 = document.querySelectorAll('.tools-grid');
+  for (var g2 = 0; g2 < grids2.length; g2++) {
+    var grid = grids2[g2];
+    var cardArr = Array.prototype.slice.call(grid.querySelectorAll('.tool-card'));
+    cardArr.sort(function(a, b) {
+      var nameA = a.querySelector('.tool-name');
+      var nameB = b.querySelector('.tool-name');
+      var slugA = nameA ? slugify(nameA.textContent.trim()) : '';
+      var slugB = nameB ? slugify(nameB.textContent.trim()) : '';
+      var countA = rankMap2[slugA] || 0;
+      var countB = rankMap2[slugB] || 0;
+      return countB - countA;
+    });
+    for (var ci = 0; ci < cardArr.length; ci++) {
+      grid.appendChild(cardArr[ci]);
+    }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  instrumentLinks();
+  loadPopularData();
+});
+/* ── /Click tracking ── */
+
 let activeTag = 'all';
 function setTag(tag, el) {
   activeTag = tag;
