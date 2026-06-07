@@ -170,6 +170,20 @@ footer{position:relative;z-index:1;border-top:1px solid var(--rule);padding:3rem
 #cm-close:hover{color:#e8e6e1}
 /* ── /Contact modal ── */
 </style>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#F4A500">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MeshForce">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function() {});
+  });
+}
+</script>
 </head>
 <body>
 
