@@ -893,35 +893,17 @@ function slugify(str) {
 function trackClick(name, url) {
   var key = slugify(name);
   try {
-    fetch(SUPA_URL + '/rest/v1/directory_clicks', {
+    fetch(SUPA_URL + '/rest/v1/rpc/increment_click', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'apikey': SUPA_ANON,
-        'Authorization': 'Bearer ' + SUPA_ANON,
-        'Prefer': 'resolution=merge-duplicates'
+        'Authorization': 'Bearer ' + SUPA_ANON
       },
-      body: JSON.stringify({
-        listing_key: key,
-        listing_name: name,
-        listing_url: url,
-        page: PAGE_ID,
-        click_count: 1,
-        last_clicked_at: new Date().toISOString()
-      })
-    }).then(function(r) {
-      if (r.status === 409 || r.status === 200 || r.status === 201) {
-        fetch(SUPA_URL + '/rest/v1/rpc/increment_click', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SUPA_ANON,
-            'Authorization': 'Bearer ' + SUPA_ANON
-          },
-          body: JSON.stringify({ p_key: key, p_page: PAGE_ID })
-        }).catch(function(){});
-      }
-    }).catch(function(){});
+      body: JSON.stringify({ p_key: key, p_name: name, p_url: url, p_page: PAGE_ID })
+    })
+    .then(function(r) { console.log('[MF click]', name, r.status); })
+    .catch(function(e) { console.warn('[MF click error]', e); });
   } catch(e) {}
 }
 
