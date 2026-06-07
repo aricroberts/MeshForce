@@ -1031,10 +1031,9 @@ function togglePopularSort() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  instrumentLinks();
-  loadPopularData();
-});
+// Init — call directly since script is at bottom of page after all DOM exists
+instrumentLinks();
+loadPopularData();
 /* ── /Click tracking ── */
 
 let activeTag = 'all';
